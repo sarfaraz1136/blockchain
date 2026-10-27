@@ -1,0 +1,262 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="9c297de1-ab82-2bbc-6862-aa408421d109")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,85085,e=>{"use strict";var t=e.i(351623),a=e.i(730029);let s=t.gql`
+    fragment LayoutHeaderAvatarDropdownCurrentUser on CurrentUser {
+  id
+  url
+  username
+  fullName
+  image
+  userSubscriptionType
+  ...CoreSubscriptionPlanStatus
+}
+    ${a.CoreSubscriptionPlanStatusFragmentDoc}`,i=t.gql`
+    fragment OrgSwitcherOrg on Org {
+  id
+  name
+  type
+  slug
+  currentUserRole
+  image
+  dealContext {
+    dealType
+    salesContactEmail
+  }
+}
+    `,r=t.gql`
+    fragment OrgSwitcherOrganizationConnectionFragment on CurrentUserOrganizationConnection {
+  items {
+    org {
+      ...OrgSwitcherOrg
+    }
+    type
+  }
+}
+    ${i}`,n=t.gql`
+    fragment OrgSwitcherCurrentUser on CurrentUser {
+  id
+  image
+  username
+  url
+  fullName
+  firstName
+  email
+  isMemberOfAnyOrg
+  userSubscriptionType
+  orgs(count: 50) {
+    __typename
+    ... on CurrentUserOrganizationConnection {
+      ...OrgSwitcherOrganizationConnectionFragment
+    }
+    ... on Error {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+    ... on UserError {
+      message
+    }
+  }
+  ...CoreSubscriptionPlanStatus
+}
+    ${r}
+${a.CoreSubscriptionPlanStatusFragmentDoc}`;e.s(["LayoutHeaderAvatarDropdownCurrentUserFragmentDoc",0,s,"OrgSwitcherCurrentUserFragmentDoc",0,n])},700995,e=>{"use strict";var t=e.i(351623),a=e.i(764992);let s=t.gql`
+    fragment ReplEnvironmentMobileRepl on Repl {
+  id
+  title
+  description
+  url
+  ...CrosisContextRepl
+  user {
+    id
+    image
+  }
+  org {
+    id
+  }
+  rootOriginReplUrl
+  source {
+    release {
+      id
+    }
+  }
+  config {
+    isAgentRepl
+  }
+}
+    ${a.CrosisContextReplFragmentDoc}`;e.s(["ReplEnvironmentMobileReplFragmentDoc",0,s])},855763,e=>{"use strict";var t=e.i(351623),a=e.i(989074);let s=t.gql`
+    fragment BulkDeleteConfirmationModalRepl on Repl {
+  id
+  iconUrl
+  title
+  hostingDeployment {
+    ... on HostingDeployment {
+      id
+      replitAppSubdomain
+      timeCreated
+      ...BuildStatusBadgeHostingDeployment
+    }
+  }
+}
+    ${a.BuildStatusBadgeHostingDeploymentFragmentDoc}`;e.s(["BulkDeleteConfirmationModalReplFragmentDoc",0,s])},557448,e=>{"use strict";var t=e.i(351623),a=e.i(913864),s=e.i(458511),i=e.i(85085),r=e.i(575872);let n=t.gql`
+    fragment MobileWorkspaceRepl on Repl {
+  id
+  language
+  isOwner
+  title
+  iconUrl
+  rootOriginReplUrl
+  layoutState(input: {environment: mobile})
+  source {
+    release {
+      id
+      repl {
+        id
+        title
+        owner {
+          ... on User {
+            id
+            username
+          }
+        }
+      }
+    }
+  }
+  user {
+    id
+  }
+  slug
+  url
+  config {
+    gitRemoteUrl
+    isAgentRepl
+    isAgentStack
+    isExpertMode
+    isInPlanningPhase
+    zipImportSource
+    zipImportStatus
+  }
+  org {
+    id
+    slug
+  }
+  authorizations {
+    ...WorkspaceConnectAuthorization
+  }
+  ...WorkspaceToolPanesRepl
+}
+    ${a.WorkspaceConnectAuthorizationFragmentDoc}
+${s.WorkspaceToolPanesReplFragmentDoc}`,l=t.gql`
+    fragment MobileWorkspaceCurrentUser on CurrentUser {
+  id
+  email
+  timeCreated
+  isAdmin: hasRole(role: ADMIN)
+  keybindings(environment: $environment, platform: $platform) {
+    keybindings
+  }
+  ...LayoutHeaderAvatarDropdownCurrentUser
+  ...WorkspaceDoGitProviderImportCurrentUser
+  isUserActiveOnMobile
+  workspacePreferences
+}
+    ${i.LayoutHeaderAvatarDropdownCurrentUserFragmentDoc}
+${r.WorkspaceDoGitProviderImportCurrentUserFragmentDoc}`;e.s(["MobileWorkspaceCurrentUserFragmentDoc",0,l,"MobileWorkspaceReplFragmentDoc",0,n])},567307,e=>{"use strict";var t=e.i(351623),a=e.i(748538),s=e.i(299020);let i={},r=t.gql`
+    fragment ReplInfoEditFormRepl on Repl {
+  ...EditReplFormRepl
+  id
+  title
+  description
+  isPrivate
+  iconUrl
+  publishedAs
+  templateLabel
+  org {
+    id
+    type
+  }
+  templateInfo {
+    iconUrl
+  }
+  authorizations {
+    editMetadata {
+      isAuthorized
+      message
+    }
+    editVisibility {
+      isAuthorized
+      code
+      message
+    }
+    editTemplateMetadata {
+      isAuthorized
+      message
+    }
+  }
+}
+    ${a.EditReplFormReplFragmentDoc}`,n=t.gql`
+    mutation ReplInfoEditFormUpdateRepl($input: UpdateReplInput!) {
+  updateRepl(input: $input) {
+    repl {
+      id
+      ...ReplInfoEditFormRepl
+    }
+  }
+}
+    ${r}`;e.s(["ReplInfoEditFormReplFragmentDoc",0,r,"useReplInfoEditFormUpdateReplMutation",0,function(e){let t={...i,...e};return s.useMutation(n,t)}])},160675,e=>{"use strict";var t=e.i(351623),a=e.i(344480);e.i(975473);let s={},i=t.gql`
+    query ProjectAgentPublishCapability($replId: String!) {
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      authorizations {
+        configureAgentPublish {
+          isAuthorized
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useProjectAgentPublishCapabilityQuery",0,function(e){let t={...s,...e};return a.useQuery(i,t)}])},605161,e=>{"use strict";var t=e.i(276385),a=e.i(389959),s=e.i(160675),i=e.i(476282),r=e.i(72495),n=e.i(709485),l=e.i(320216);e.i(214847);var o=e.i(864300),u=e.i(415541),d=e.i(577671),c=e.i(483559);e.s(["ProjectAgentPublishSetting",0,function({replId:e}){let p=(0,o.useIntl)(),g=(0,a.useId)(),{showError:m}=(0,l.default)(),{loading:f,agentSettings:h,updateSettings:A}=(0,d.useCurrentUserReplSettings)(e),{data:x,loading:I,error:M}=(0,s.useProjectAgentPublishCapabilityQuery)({variables:{replId:e}}),[k,v]=(0,a.useState)(!1),b=x?.getRepl.__typename==="Repl"&&x.getRepl.authorizations.configureAgentPublish.isAuthorized,w=async e=>{v(!0);let t=await A({agentSettings:{isAutoPublishEnabled:e}});(v(!1),t)?(0,u.trackV2)(n.eventsV2.AGENT_SETTINGS_UPDATED,{action:"auto_publish_toggled",enabled:e,settings_mode:"build"}):m(p.formatMessage({id:"workspace.replInfoAgentPublishSaveError",defaultMessage:"Couldn't save Agent publish settings. Please try again."}))},R=p.formatMessage({id:"workspace.agentSettingsAutoPublishTitle",defaultMessage:"Enable Agent publish"});return(0,t.jsxs)("div",{clsx:(0,c.tw)("flex items-center justify-between gap-400"),children:[(0,t.jsxs)("div",{clsx:(0,c.tw)("flex min-w-0 flex-1 flex-col"),children:[(0,t.jsx)(r.Text,{children:R}),(0,t.jsx)(r.Text,{id:g,variant:"small",color:"dimmest",children:p.formatMessage({id:"workspace.agentSettingsAutoPublishDescription",defaultMessage:"Agent publishes when prompted by you"})})]}),(0,t.jsx)(i.Switch,{"aria-label":R,"aria-describedby":g,dataAnalyticsId:"agent_settings_auto_publish_toggle",isSelected:h?.isAutoPublishEnabled??!1,isDisabled:f||I||!!M||!b||k,onChange:w})]})}])},119840,e=>{"use strict";var t=e.i(276385),a=e.i(389959),s=e.i(736516),i=e.i(543142),r=e.i(459753),n=e.i(884102),l=e.i(72495),o=e.i(153866),u=e.i(884214);e.i(214847);var d=e.i(864300),c=e.i(605161),p=e.i(259563),g=e.i(483559);e.i(558671);var m=e.i(997227);function f({anchorRef:e,replId:h,onOpenChange:A}){let x=(0,a.useRef)(null),I=(0,d.useIntl)(),M=(0,m.useFeatureGate)("gate_agent_auto_publish",!1),k=I.formatMessage({id:"workspace.replInfoAgentSettings",defaultMessage:"Project settings"}),{overlayProps:v}=(0,i.useOverlay)({isOpen:!0,isDismissable:!0,onClose:()=>A(!1)},x),{dialogProps:b}=(0,s.useDialog)({"aria-label":k},x),w=(0,u.useAutoLogView)({elementId:"project_settings_popover"}),R=(0,o.useMergeRefs)([x,w]);return(0,a.useEffect)(()=>{let t=e.current;return queueMicrotask(()=>x.current?.focus()),()=>{t?.focus()}},[e]),(0,t.jsx)(n.RawPopover,{"data-analytics-id":"project_settings_popover",isOpen:!0,onOpenChange:A,isNonModal:!0,triggerRef:e,placement:"bottom start",offset:4,clsx:(0,g.tw)(g.tw.designSystemDeviation("w-[min(400px,calc(100vw-16px))] max-w-[calc(100vw-16px)] max-h-[calc(100vh-16px)]")),shouldCloseOnInteractOutside:()=>!1,children:(0,t.jsx)("div",{...(0,r.mergeProps)(v,b),ref:R,tabIndex:-1,clsx:(0,g.tw)("overflow-y-auto",g.tw.designSystemDeviation("max-h-[inherit]")),children:(0,t.jsxs)("div",{clsx:(0,g.tw)("flex flex-col gap-500 p-400"),children:[(0,t.jsx)(l.Text,{children:k}),M?(0,t.jsx)(c.ProjectAgentPublishSetting,{replId:h},h):null,(0,t.jsx)(p.ProjectTaskAutomationSettingsForm,{replId:h})]})})})}e.s(["ProjectSettingsPopover",0,function({anchorRef:e,replId:a,isOpen:s,onOpenChange:i}){return s?(0,t.jsx)(f,{anchorRef:e,replId:a,onOpenChange:i}):null}])},259563,e=>{"use strict";var t=e.i(276385),a=e.i(389959),s=e.i(908796),i=e.i(476282),r=e.i(72495),n=e.i(709485),l=e.i(320216);e.i(214847);var o=e.i(20397),u=e.i(864300),d=e.i(415541),c=e.i(898699),p=e.i(719457),g=e.i(577671),m=e.i(483559);function f({dataAnalyticsId:e,isDisabled:a,isSelected:s,label:n,onChange:l}){return(0,t.jsxs)("div",{clsx:(0,m.tw)("flex items-center justify-between gap-400"),children:[(0,t.jsx)("div",{clsx:(0,m.tw)("min-w-0 flex-1"),children:(0,t.jsx)(r.Text,{children:n})}),(0,t.jsx)(i.Switch,{dataAnalyticsId:e,"aria-label":n,isSelected:s,isDisabled:a,onChange:l})]})}e.s(["ProjectTaskAutomationSettingsForm",0,function({replId:e}){let i=(0,u.useIntl)(),{showError:h}=(0,l.default)(),{loading:A,taskSettings:x,updateSettings:I}=(0,g.useCurrentUserReplSettings)(e),{value:M,loading:k}=(0,c.useLegacyAutoApprovePlan)(e),[v,b]=(0,a.useState)(!1),w=(0,p.resolveAutoApprovePlan)(x,M),R=e=>"isAutoApprovePlanEnabled"===e?w:x?.[e]??!1,T=async(e,t)=>{if(v)return;let a="isAutoApprovePlanEnabled"===e?w:x?.[e]??!1;b(!0);let r=await I({taskSettings:{[e]:t}});(b(!1),r)?"isAutoApprovePlanEnabled"===e&&(0,d.trackV2)(n.eventsV2.TASK_AUTO_APPROVAL_PREFERENCE_UPDATED,{previous_value:a,next_value:t,was_default:!x?.explicitFields.includes(s.UserReplTaskSettingsField.IsAutoApprovePlanEnabled)}):h(i.formatMessage({id:"workspace.replInfoTaskAutomationSaveError",defaultMessage:"Couldn't save task settings. Please try again."}))},y=i.formatMessage({id:"workspace.replInfoAutoApprovePlan",defaultMessage:"Automatically approve task plans"}),P=i.formatMessage({id:"workspace.replInfoAutoMergeDefault",defaultMessage:"Automatically apply changes for finished tasks"});return(0,t.jsxs)("div",{clsx:(0,m.tw)("flex flex-col gap-300"),children:[(0,t.jsxs)("div",{clsx:(0,m.tw)("flex flex-col gap-100"),children:[(0,t.jsx)(r.Text,{multiline:!1,children:(0,t.jsx)(o.FormattedMessage,{id:"workspace.replInfoTaskAutomationHeading",defaultMessage:"Task automation"})}),(0,t.jsx)(r.Text,{variant:"small",color:"dimmest",children:(0,t.jsx)(o.FormattedMessage,{id:"workspace.replInfoTaskAutomationOnlyYou",defaultMessage:"These settings only apply to you in this App."})})]}),(0,t.jsx)(f,{label:y,dataAnalyticsId:"agent_settings_auto_approve_plan_checkbox",isSelected:R("isAutoApprovePlanEnabled"),isDisabled:A||k||v,onChange:e=>T("isAutoApprovePlanEnabled",e)}),(0,t.jsx)(f,{label:P,dataAnalyticsId:"agent_settings_auto_merge_checkbox",isSelected:R("isAutoMergeEnabled"),isDisabled:A||v,onChange:e=>T("isAutoMergeEnabled",e)})]})}])},962587,e=>{"use strict";var t=e.i(351623),a=e.i(299020);let s={},i=t.gql`
+    mutation ReplInfoReplIconUpdate($input: UpdateReplInput!) {
+  updateRepl(input: $input) {
+    repl {
+      id
+      iconUrl
+    }
+  }
+}
+    `;e.s(["useReplInfoReplIconUpdateMutation",0,function(e){let t={...s,...e};return a.useMutation(i,t)}])},270749,e=>{"use strict";var t=e.i(276385),a=e.i(389959),s=e.i(962587),i=e.i(713443),r=e.i(100661),n=e.i(72495),l=e.i(453199),o=e.i(760845),u=e.i(349597),d=e.i(956264),c=e.i(320216);e.i(214847);var p=e.i(20397),g=e.i(864300),m=e.i(345219),f=e.i(483559),h=e.i(365757);e.s(["ReplIconInput",0,function({replId:e,authz:A,initialIconUrl:x,originIconUrl:I}){let M=(0,g.useIntl)(),{showError:k,showConfirm:v}=(0,c.default)(),[b,w]=(0,a.useState)(x),R=(0,a.useRef)(null),[T,{loading:y}]=(0,s.useReplInfoReplIconUpdateMutation)({onError:()=>{k(M.formatMessage({id:"workspace.replIconUpdateError",defaultMessage:"Something unexpected happened"}))},onCompleted:e=>{e.updateRepl.repl&&v(M.formatMessage({id:"workspace.replIconUpdated",defaultMessage:"App icon updated successfully"}))}}),P=b!==I?M.formatMessage({id:"workspace.replIconUploadNew",defaultMessage:"Upload new"}):M.formatMessage({id:"workspace.replIconUpload",defaultMessage:"Upload icon"}),j=(0,d.default)({onUpload:async({url:t})=>{await T({variables:{input:{id:e,iconUrl:t}}}),w(t),R.current&&(URL.revokeObjectURL(R.current),R.current=null)},onUploadPreview:()=>{v(M.formatMessage({id:"workspace.replIconUploading",defaultMessage:"Uploading App icon"}))},onError:e=>k(e.message)});(0,a.useEffect)(()=>{w(x)},[x]),(0,a.useEffect)(()=>()=>{R.current&&URL.revokeObjectURL(R.current)},[]);let C=e=>{R.current&&URL.revokeObjectURL(R.current);let t=URL.createObjectURL(e);R.current=t,w(t),j.uploadImage(e,u.ImageUploadContexts.ReplIcon)},S=async e=>{let t=e.items.filter(e=>"file"===e.kind).map(e=>e.getFile()),a=(await Promise.all(t)).filter(e=>null!==e);if(a.length>0){let e=a[0];if(!m.ACCEPTABLE_IMAGE_UPLOAD_TYPES.includes(e.type))return void k(M.formatMessage({id:"workspace.replIconUnsupportedType",defaultMessage:"Only PNG, JPEG, GIF, and WebP images are supported"}));C(e)}};return A.isAuthorized?(0,t.jsxs)(o.View,{clsx:(0,f.tw)("gap-100"),children:[(0,t.jsx)(n.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(p.FormattedMessage,{id:"workspace.replIconLabel",defaultMessage:"Icon"})}),(0,t.jsx)(r.FileUploadInput,{onSelect:e=>{if(e&&e.length>0){let t=e[0];if(!m.ACCEPTABLE_IMAGE_UPLOAD_TYPES.includes(t.type))return void k(M.formatMessage({id:"workspace.replIconUnsupportedType",defaultMessage:"Only PNG, JPEG, GIF, and WebP images are supported"}));C(t)}},onDrop:S,acceptedFileTypes:m.ACCEPTABLE_IMAGE_UPLOAD_TYPES,children:(0,t.jsxs)(o.View,{clsx:(0,f.tw)("flex-row items-logical-start gap-300"),children:[(0,t.jsx)(h.default,{alt:"",size:48,iconUrl:b??""}),(0,t.jsxs)(o.View,{clsx:(0,f.tw)("items-logical-start gap-100"),children:[(0,t.jsx)(i.Button,{text:P,loading:y}),(0,t.jsx)(n.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(p.FormattedMessage,{id:"workspace.replIconShouldBeSquare",defaultMessage:"Icon should be square"})})]})]})})]}):(0,t.jsxs)(o.View,{clsx:(0,f.tw)("gap-100"),children:[(0,t.jsx)(n.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(p.FormattedMessage,{id:"workspace.replIconLabel",defaultMessage:"Icon"})}),(0,t.jsxs)(o.View,{clsx:(0,f.tw)("flex-row items-logical-start gap-300"),children:[(0,t.jsx)(h.default,{alt:"",size:48,iconUrl:b??""}),(0,t.jsxs)(o.View,{clsx:(0,f.tw)("items-logical-start gap-100"),children:[(0,t.jsx)(l.Tooltip,{tooltip:M.formatMessage({id:"workspace.replIconNotAllowed",defaultMessage:"Not allowed to update icon"}),children:(0,t.jsx)(i.Button,{text:P,disabled:!0})}),(0,t.jsx)(n.Text,{variant:"small",color:"dimmer",children:(0,t.jsx)(p.FormattedMessage,{id:"workspace.replIconShouldBeSquare",defaultMessage:"Icon should be square"})})]})]})]})}])},845772,e=>{"use strict";var t=e.i(276385),a=e.i(389959),s=e.i(908796),i=e.i(567307),r=e.i(248334),n=e.i(455303),l=e.i(713443),o=e.i(108501),u=e.i(72495),d=e.i(760845),c=e.i(371884),p=e.i(320216);e.i(214847);var g=e.i(20397),m=e.i(864300),f=e.i(402841),h=e.i(270749),A=e.i(483559);function x({message:e,id:a}){return(0,t.jsxs)(d.View,{id:a,clsx:(0,A.tw)("flex-row items-center gap-100"),children:[(0,t.jsx)(n.default,{clsx:(0,A.tw)(A.tw.designSystemDeviation("text-(--accent-negative-stronger)"))}),(0,t.jsx)(d.View,{clsx:(0,A.tw)("grow shrink"),children:(0,t.jsx)(u.Text,{variant:"small",clsx:(0,A.tw)(A.tw.designSystemDeviation("text-(--accent-negative-stronger)")),children:e})})]})}e.s(["EditReplForm",0,function({repl:e,onClose:n,autoSizeDescription:I=!0}){let M=(0,m.useIntl)(),{showConfirm:k,showError:v}=(0,p.default)(),[b,{loading:w}]=(0,i.useReplInfoEditFormUpdateReplMutation)({onError:e=>{v(e.message)}}),R=(0,c.useFormField)(e.title,e=>{let t=e.trim();return 0===t.length?{message:M.formatMessage({id:"workspace.replInfoNameRequired",defaultMessage:"Please enter a name"})}:t.length>60?{message:M.formatMessage({id:"workspace.replInfoNameTooLong",defaultMessage:"Name must be {max} characters or less"},{max:60})}:void 0}),T=(0,c.useFormField)(e.description??"",e=>{if(e.length>f.REPL_DESCRIPTION_MAX_LENGTH)return{message:M.formatMessage({id:"workspace.replInfoDescriptionTooLong",defaultMessage:"Description must be {max} characters or less"},{max:f.REPL_DESCRIPTION_MAX_LENGTH})}}),[y,P]=(0,a.useState)(e.templateLabel),[j,C]=(0,a.useState)(!1),S=e.title,E=e.description??"",U=e.templateLabel,_=e.publishedAs===s.PublishedReplKind.Template,D=(0,a.useId)(),F=(0,a.useId)(),L=(0,a.useId)(),N=(0,a.useId)(),O=(0,a.useId)(),z=!!R.error||!!T.error,q=R.value!==S||T.value!==E||y!==U,B=async()=>{if(!w&&null==R.validate()&&null==T.validate())try{await b({variables:{input:{id:e.id,title:R.value.trim(),description:T.value,templateLabel:e.authorizations.editTemplateMetadata.isAuthorized?y:void 0}}}),k(M.formatMessage({id:"workspace.replInfoDetailsUpdated",defaultMessage:"App details updated"})),n?.()}catch(e){}};return(0,t.jsxs)(d.View,{clsx:(0,A.tw)("gap-400"),children:[(0,t.jsx)(u.Header,{level:2,variant:"subheadBig",children:(0,t.jsx)(g.FormattedMessage,{id:"workspace.replInfoProjectDetailsHeading",defaultMessage:"Project details"})}),(0,t.jsx)(h.ReplIconInput,{replId:e.id,authz:e.authorizations.editMetadata,initialIconUrl:e.iconUrl,originIconUrl:e.templateInfo?.iconUrl??e.iconUrl}),(0,t.jsxs)(d.View,{clsx:(0,A.tw)("gap-100"),children:[(0,t.jsx)("label",{htmlFor:D,children:(0,t.jsx)(u.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(g.FormattedMessage,{id:"workspace.replInfoNameLabel",defaultMessage:"Name"})})}),(0,t.jsx)(o.Input,{size:"default",disabled:!e.authorizations.editMetadata.isAuthorized,maxLength:60,value:R.value,onChange:e=>R.setValue(e.target.value),onFocus:()=>C(!0),spellCheck:!1,id:D,"aria-describedby":F,dataCy:"ws-repl-info-title-input"}),R.value.length>=60?(0,t.jsx)(x,{message:M.formatMessage({id:"workspace.replInfoCharLimitReached",defaultMessage:"You've reached the {max} character limit"},{max:60})}):null,R.error?(0,t.jsx)(x,{message:R.error.message,id:F}):null]}),(0,t.jsxs)(d.View,{clsx:(0,A.tw)("gap-100"),children:[(0,t.jsx)("label",{htmlFor:L,children:(0,t.jsx)(u.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(g.FormattedMessage,{id:"workspace.replInfoDescriptionLabel",defaultMessage:"Description"})})}),(0,t.jsx)(o.MultiLineInput,{constrainHeight:!0,disabled:!e.authorizations.editMetadata.isAuthorized,maxLength:f.REPL_DESCRIPTION_MAX_LENGTH,value:T.value,onChange:e=>T.setValue(e.target.value),onFocus:()=>C(!0),placeholder:M.formatMessage({id:"workspace.replInfoDescriptionPlaceholder",defaultMessage:"What does this App do?"}),autoSize:I,id:L,"aria-describedby":N}),T.value.length>=f.REPL_DESCRIPTION_MAX_LENGTH?(0,t.jsx)(x,{message:M.formatMessage({id:"workspace.replInfoCharLimitReached",defaultMessage:"You've reached the {max} character limit"},{max:f.REPL_DESCRIPTION_MAX_LENGTH})}):null,T.error?(0,t.jsx)(x,{message:T.error.message,id:N}):null]}),_&&e.authorizations.editTemplateMetadata.isAuthorized?(0,t.jsxs)(d.View,{clsx:(0,A.tw)("gap-100"),children:[(0,t.jsx)("label",{htmlFor:O,children:(0,t.jsx)(u.Text,{variant:"small",color:"dimmer",multiline:!1,children:(0,t.jsx)(g.FormattedMessage,{id:"workspace.replInfoTemplateLabel",defaultMessage:"Template label"})})}),(0,t.jsx)(o.Input,{size:"default",value:y,maxLength:60,placeholder:M.formatMessage({id:"workspace.replInfoTemplateLabel",defaultMessage:"Template label"}),spellCheck:!1,onChange:e=>P(e.target.value),onFocus:()=>C(!0),id:O})]}):null,j?(0,t.jsx)(d.View,{clsx:(0,A.tw)("flex-row justify-logical-end gap-200"),children:(0,t.jsx)(l.Button,{text:M.formatMessage({id:"workspace.replInfoSaveChanges",defaultMessage:"Save changes"}),colorway:"primary",onClick:B,disabled:w||z||!q||!e.authorizations.editMetadata.isAuthorized,iconLeft:w?(0,t.jsx)(r.default,{}):void 0,dataCy:"repl-info-save-changes-button"})}):null]})}])},946860,e=>{"use strict";var t=e.i(276385),a=e.i(407173),s=e.i(633862),i=e.i(166001),r=e.i(286083);e.s(["PlanningChatActionMenuItems",0,function({chatId:e,onStartRename:n,onArchive:l,onRestore:o}){return(0,t.jsxs)(t.Fragment,{children:[n?(0,t.jsx)(r.MenuItem,{label:"Rename",icon:(0,t.jsx)(a.default,{}),onAction:n}):null,l?(0,t.jsx)(r.MenuItem,{label:"Archive",icon:(0,t.jsx)(s.default,{}),onAction:()=>l(e)}):null,o?(0,t.jsx)(r.MenuItem,{label:"Restore",icon:(0,t.jsx)(i.default,{}),onAction:()=>o(e)}):null]})}])},316831,e=>{"use strict";var t=e.i(276385),a=e.i(389959);e.i(293163);var s=e.i(429733),i=e.i(855496),r=e.i(5484),n=e.i(776801),l=e.i(844430);let o=(0,a.memo)(function({chat:e,replId:a,size:s}){let i=(0,r.usePlanningSessionHasProposedTasks)(a,e.id),n=c(e);return(0,t.jsx)(u,{isWorking:n,hasProposedTasks:i,size:s})});function u({isWorking:e,hasProposedTasks:a,size:s=16}){return(0,t.jsx)(l.BlockSpinner,{...d(e,a),size:s})}function d(e,t){return e?n.TASK_SPINNERS.planning:t?n.TASK_SPINNERS.planned:n.TASK_SPINNERS.draft}function c(e){let{data:t}=(0,i.useAgent)(e.agentId);return t?.status===s.AgentStatus.RUNNING}e.s(["PlanningChatIcon",0,o,"PlanningChatStatusIcon",0,u,"getPlanningChatSpinner",0,d,"usePlanningAgentWorking",0,c])},73509,e=>{"use strict";var t=e.i(276385),a=e.i(906135),s=e.i(488950),i=e.i(335338),r=e.i(407173),n=e.i(116447),l=e.i(301662),o=e.i(286083);e.i(316283);var u=e.i(544854),d=e.i(955410);e.i(214847);var c=e.i(864300),p=e.i(695798),g=e.i(46085),m=e.i(312549);e.s(["TaskActionMenuItems",0,function({task:e,onMerge:f,onReplan:h,onReviewChanges:A,onStartRename:x,onCancel:I,onCancelApplyingChanges:M,isCancellingApplyingChanges:k,setIsCancellingApplyingChanges:v,isMerging:b,setIsMerging:w,isReplanning:R,setIsReplanning:T,hideMergeAction:y=!1,isCancelDisabled:P=!1}){let j=(0,c.useIntl)(),{trackClick:C}=(0,d.useTrackClick)(),S=!0===k,E=(0,p.useWorkspaceHasRepl)(),U=e.kind===u.TaskKind.SECURITY_SCAN,_=!E&&null!=e.subreplRunId&&(0,m.canStopTask)(e),D=!y&&!!f&&(0,m.canMergeTask)(e),F=!E&&!!h&&(0,m.canReplanTask)(e),L=!!A&&(0,m.canReviewTask)(e),N=!!M&&(0,m.canCancelApplyingChanges)(e),O=!!(x||L||_||N||F||I&&(0,m.canCancelTask)(e));return(0,t.jsxs)(t.Fragment,{children:[D?(0,t.jsx)(o.MenuItem,{label:b?"Applying changes…":"Apply changes",icon:(0,t.jsx)(s.default,{}),isDisabled:b,onAction:async()=>{if(f){C({productArea:g.TASKS_PRODUCT_AREA,target:g.TaskClickTarget.APPLY_CHANGES_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),w(!0);try{await f(e.id)}finally{w(!1)}}}}):null,D&&O?(0,t.jsx)(o.Separator,{}):null,x?(0,t.jsx)(o.MenuItem,{label:j.formatMessage({id:"workspace.renameTask",defaultMessage:"Rename"}),icon:(0,t.jsx)(r.default,{}),isDisabled:U,description:U?j.formatMessage({id:"workspace.renameTaskSecurityScanHint",defaultMessage:"Security scans keep their given name"}):void 0,onAction:x}):null,L?(0,t.jsx)(o.MenuItem,{label:"Review changes",icon:(0,t.jsx)(n.default,{}),onAction:()=>{A?.(e.id)}}):null,_?(0,t.jsx)(o.MenuItem,{label:"Stop",icon:(0,t.jsx)(l.default,{}),isDisabled:!0}):null,N?(0,t.jsx)(o.MenuItem,{label:S?"Cancelling…":"Cancel applying changes",icon:(0,t.jsx)(i.default,{}),isDisabled:S,onAction:async()=>{if(M){C({productArea:g.TASKS_PRODUCT_AREA,target:g.TaskClickTarget.CANCEL_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),v?.(!0);try{await M(e.id)}finally{v?.(!1)}}}}):null,F?(0,t.jsx)(o.MenuItem,{label:R?"Re-planning…":"Re-plan",icon:(0,t.jsx)(a.default,{}),isDisabled:R,onAction:async()=>{if(h){C({productArea:g.TASKS_PRODUCT_AREA,target:g.TaskClickTarget.REPLAN_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),T?.(!0);try{await h(e.id)}finally{T?.(!1)}}}}):null,I&&(0,m.canCancelTask)(e)?(0,t.jsx)(o.MenuItem,{label:"Cancel",icon:(0,t.jsx)(i.default,{}),isDisabled:P,onAction:()=>{C({productArea:g.TASKS_PRODUCT_AREA,target:g.TaskClickTarget.CANCEL_MENU_ITEM,properties:{task_id:e.id,task_state:e.state}}),I(e.id)}}):null]})}])},869034,e=>{"use strict";var t=e.i(389959),a=e.i(312549);function s(e,t){let s=new Map;for(let e of t)s.set(e.id,e.state);let i=new Set((function(e){let t=new Map;for(let s of e){if(!(0,a.isStandaloneFollowUpTask)(s))continue;let e=t.get(s.createdAt);e?e.push(s):t.set(s.createdAt,[s])}let s="",i=[];for(let[e,a]of t)e>s&&(s=e,i=a);return i.some(e=>"CANCELLED"!==e.state&&"MERGED"!==e.state)&&i.length<=4?i:[]})(t).map(e=>e.id)),r=new Map;for(let e of t)e.proposedFromTaskId&&r.set(e.proposedFromTaskId,(r.get(e.proposedFromTaskId)??0)+1);let n=[];for(let t of e)"PROPOSED"===t.state&&(null!=t.proposedFromTaskId&&"MERGED"===s.get(t.proposedFromTaskId)&&(r.get(t.proposedFromTaskId)??0)<=4||i.has(t.id))&&n.push(t);return n.sort((e,t)=>t.createdAt.localeCompare(e.createdAt)),n}e.s(["getSuggestedTaskCountsById",0,function(e){let t=new Map;for(let a of e){let e=a.proposedFromTaskId??`standalone:${a.createdAt}`;t.set(e,(t.get(e)??0)+1)}return new Map(e.map(e=>[e.id,t.get(e.proposedFromTaskId??`standalone:${e.createdAt}`)??1]))},"selectFollowUpDrafts",0,s,"useFollowUpTasks",0,function(e,a){return(0,t.useMemo)(()=>s(e,a),[e,a])}])},474586,e=>{"use strict";var t=e.i(351623),a=e.i(344480);e.i(975473);let s={},i=t.gql`
+    query IsMultiplayerProject($replId: String!) {
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      config {
+        isMultiplayerProject
+      }
+    }
+  }
+}
+    `;e.s(["useIsMultiplayerProjectQuery",0,function(e){let t={...s,...e};return a.useQuery(i,t)}])},633123,e=>{"use strict";var t=e.i(474586);e.s(["useIsMultiplayerProject",0,function(e){let{data:a,loading:s}=(0,t.useIsMultiplayerProjectQuery)({variables:{replId:e}});return{isMultiplayerProject:a?.getRepl?.__typename==="Repl"&&(a.getRepl.config?.isMultiplayerProject??!1),loading:s}}])},867919,e=>{"use strict";var t=e.i(389959),a=e.i(797562),s=e.i(570438),i=e.i(815881),r=e.i(633123);function n({replId:e,allTasks:i,planningChats:l,enabled:o=!0,resolvePlanningChatCreators:u=!0}){var d;let c=(0,s.normalizeCurrentUserId)((0,s.useCurrentUserId)()),{isMultiplayerProject:p,loading:g}=(0,r.useIsMultiplayerProject)(e),[m]=(0,a.useSetMultiplayerProjectMutation)(),f=o&&!p&&!g,h=(d=o&&u,(0,t.useMemo)(()=>{let e=new Map;if(!d)return e;for(let t of l)e.set(t.id,t.thread.createdBy);return e},[d,l])),A=(0,t.useRef)(!1),x=(0,t.useMemo)(()=>{if(p)return A.current=!0,!0;if(A.current)return!0;if(!f||null==c)return!1;for(let e of i)if(function(e,t){return e.events.some(e=>e.userId!==t)}(e,c))return A.current=!0,!0;if(u)for(let e of l){let t=h.get(e.id);if(null!=t&&t!==c)return A.current=!0,!0}return!1},[i,c,p,h,l,u,f]),I=(0,t.useRef)(!1);return(0,t.useEffect)(()=>{!x||p||I.current||(I.current=!0,m({variables:{input:{id:e,isMultiplayerProject:!0}},optimisticResponse:{__typename:"RootMutationType",updateRepl:{__typename:"UpdateReplPayload",repl:{__typename:"Repl",id:e,config:{__typename:"ReplConfig",isMultiplayerProject:!0}}}}}))},[x,p,e,m]),{isMultiplayer:x,planningChatCreatorUserIds:h}}e.s(["useProjectMultiplayer",0,function(e){let{tasks:t}=(0,i.useAllTasks)(e.replId,"");return n({...e,allTasks:t})},"useProjectMultiplayerFromTasks",0,n])},151369,e=>{"use strict";var t=e.i(36163);async function a(e){return e.thread.createdBy}e.s(["getPlanningChatCreatorUserId",0,a,"usePlanningChatCreatorUserId",0,function(e,t){return t&&e?e.thread.createdBy:null},"usePlanningChatLastActivity",0,function(e,t=!0){if(!t)return null;let a=new Date(e.thread.updatedAt);return Number.isNaN(a.getTime())?null:a},"usePlanningChatTitle",0,function(e){return e.thread.title},"usePlanningChatTitleById",0,function(e){return(0,t.usePlanningChatById)(e)?.thread.title??null}])},5484,e=>{"use strict";var t=e.i(165007),a=e.i(202276);e.i(121908);var s=e.i(815845),i=e.i(312549);e.s(["usePlanningSessionHasProposedTasks",0,function(e,r){let n=(0,s.useTasksCollection)(),{data:l}=(0,a.useLiveQuery)(a=>e&&r?a.from({taskItems:n}).where(a=>(0,t.and)((0,t.eq)(a.taskItems.replId,e),(0,t.eq)(a.taskItems.state,"PROPOSED"),(0,t.or)((0,t.eq)(a.taskItems.planningSessionId,r),(0,t.eq)(a.taskItems.threadId,r)))).fn.where(({taskItems:e})=>!(0,i.isStandaloneFollowUpTask)(e)).select(({taskItems:e})=>({id:e.id})).findOne():null,[r,e,n]);return null!=l}])},797562,e=>{"use strict";var t=e.i(351623),a=e.i(299020);let s={},i=t.gql`
+    mutation SetMultiplayerProject($input: UpdateReplInput!) {
+  updateRepl(input: $input) {
+    repl {
+      id
+      config {
+        isMultiplayerProject
+      }
+    }
+  }
+}
+    `;e.s(["useSetMultiplayerProjectMutation",0,function(e){let t={...s,...e};return a.useMutation(i,t)}])},410073,e=>{"use strict";var t=e.i(351623),a=e.i(344480);e.i(975473);let s={},i=t.gql`
+    query TaskCreatorUser($userId: Int!) {
+  user(id: $userId) {
+    id
+    username
+    fullName
+    image
+  }
+}
+    `;e.s(["useTaskCreatorUserQuery",0,function(e){let t={...s,...e};return a.useQuery(i,t)}])},557684,e=>{"use strict";var t=e.i(410073);function a(e){let t=e.find(e=>"APPROVED"===e.event);return t?t.userId:null}function s(e){let t=e.find(e=>"CREATED"===e.event);return t?t.userId:null}e.s(["getTaskApproverUserId",0,a,"getTaskAttribution",0,function(e,t){let i=e.events.find(e=>"MERGED"===e.event),r=e.events.find(e=>"CANCELLED"===e.event),n=i??r;if(n)return{userId:n.userId,label:i?t.formatMessage({id:"workspace.taskAttributionAppliedBy",defaultMessage:"Applied by"}):t.formatMessage({id:"workspace.taskAttributionCancelledBy",defaultMessage:"Cancelled by"})};let l=a(e.events);if(null!=l)return{userId:l,label:t.formatMessage({id:"workspace.taskAttributionAcceptedBy",defaultMessage:"Accepted by"})};let o=s(e.events);return null!=o?{userId:o,label:t.formatMessage({id:"workspace.taskAttributionCreatedBy",defaultMessage:"Created by"})}:{userId:null,label:""}},"getTaskCreatorUserId",0,s,"useCreatorUser",0,function(e){let{data:a}=(0,t.useTaskCreatorUserQuery)({variables:{userId:e??0},skip:null==e});if(a?.user)return{username:a.user.username,fullName:a.user.fullName,image:a.user.image??null}}])},310231,e=>{"use strict";e.s(["getTaskTimestamp",0,function(e){let t,a,s=Date.parse(e.createdAt),i=Date.parse(e.updatedAt),r=NaN;for(let t of e.events){let e=Date.parse(t.createdAt);Number.isFinite(e)&&(!Number.isFinite(r)||e>r)&&(r=e)}if(Number.isFinite(r)&&r>i)t=r,a=new Date(r).toISOString();else{if(!Number.isFinite(i))return{label:"Created",value:e.createdAt};t=i,a=e.updatedAt}return Number.isFinite(s)&&t>s?{label:"Updated",value:a}:{label:"Created",value:e.createdAt}}])},888800,e=>{"use strict";var t=e.i(389959),a=e.i(908796),s=e.i(320216);e.i(214847);var i=e.i(864300),r=e.i(415541),n=e.i(709485),l=e.i(242917),o=e.i(443505),u=e.i(535373),d=e.i(29079),c=e.i(202758),p=e.i(184386);e.s(["useStartNewThread",0,function({onStart:e,upgradeSource:g}){let m=(0,i.useIntl)(),{show:f}=(0,l.useGlobalModal)(),{showError:h}=(0,s.default)(),A=(0,u.default)(),{isGuestInPersonalRepl:x,isOrgRepl:I,loading:M}=(0,d.useAgentAuthorization)(),k=(0,c.useUpsellPowerModelOptions)(),{taskPlanningSessionAuth:v,loading:b,refetch:w}=(0,p.useTaskPlanningSessionAuthorization)(),{startTasksAuth:R,loading:T,refetch:y}=(0,p.useStartTasksAuthorization)(a.ReplTaskExecutionEnvironment.Subrepl),P=b||T||M,j=v?.isAuthorized??!1,C=R?.isAuthorized??!1,S=j&&C,E=(0,p.isTaskListFeatureDisabled)(v)||(0,p.isTaskListFeatureDisabled)(R),U=!S&&(v?.code===a.ReplAuthorizationCode.InsufficientPermissions||R?.code===a.ReplAuthorizationCode.InsufficientPermissions),_=!P&&!S&&!1===I&&!x&&!U&&!E;(0,o.default)({onChange:async()=>{w(),y()}});let D=(0,t.useCallback)(async()=>{if(!P){if(S)return void e?.();if(_){(0,r.track)(n.events.UPGRADE_SELECTED,{source:g}),A?A.showUpsell():await f("UpgradeEducationModal",{context:"task_list",highlightedFeature:"backgroundTasks",highPowerModelOptions:k});return}if(x)return void h(m.formatMessage({id:"workspace.taskListOwnerUpgradeRequired",defaultMessage:"The owner of this project needs to upgrade to enable this feature"}));if(E)return void h(m.formatMessage({id:"workspace.taskListFeatureDisabled",defaultMessage:"Background tasks are turned off for this workspace."}));if(U)return void h(m.formatMessage({id:"workspace.taskListPermissionDenied",defaultMessage:"You do not have permission to use Task List in this project. Contact the project owner for access."}));!0===I&&h(m.formatMessage({id:"workspace.taskListOrgUpgradeRequired",defaultMessage:"Background tasks for this workspace require an upgraded team plan. Ask a workspace admin to adjust the team plan."}))}},[A,_,S,k,m,U,E,x,I,P,e,f,h,g]);return{canUpgrade:_,handlePress:D,loading:P}}])}]);
+
+//# debugId=9c297de1-ab82-2bbc-6862-aa408421d109
+//# sourceMappingURL=3ctk1e6to3x64.js.map
