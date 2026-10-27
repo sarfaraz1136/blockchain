@@ -1,0 +1,389 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="f055816a-4b22-11d3-fcde-957fc0c31a87")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,211025,e=>{"use strict";let t=["low","medium","high","xhigh","max"],r=["low","medium","high"];e.s(["CAPPED_EFFORT_LEVELS",0,r,"EFFORT_LEVELS",0,t,"EFFORT_LEVEL_LABELS",0,{low:{label:"Low",labelId:"workspace.agentSettingsEffortNameLow"},medium:{label:"Medium",labelId:"workspace.agentSettingsEffortNameMedium"},high:{label:"High",labelId:"workspace.agentSettingsEffortNameHigh"},xhigh:{label:"Extra High",labelId:"workspace.agentSettingsEffortNameExtraHigh"},max:{label:"Max",labelId:"workspace.agentSettingsEffortNameMax"}},"clampToLadder",0,function(e,t){return t.includes(e)?e:t[t.length-1]},"effortLevelsFor",0,function(e){return e?r:t}])},890639,e=>{"use strict";var t=e.i(351623),r=e.i(344480);e.i(975473);let o={},i=t.gql`
+    fragment AgentWorkspaceAuthorizations on OrgAuthorizations {
+  paidAgent: useAiAgent(tier: paid, replId: $replId) {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  freeAgent: useAiAgent(tier: free) {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  turboAgentModel: useTurbo(replId: $replId) {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  quickEditAgentModel: useQuickEdit(replId: $replId) {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  highEffortAgentModel: useHighEffort {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  perTierAutoMode: useAgentConfigPerTierAutoMode {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  intelligentAutoMode: useAgentConfigIntelligentAutoMode {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  defaultAdvancedAgentModel: defaultAdvancedAgentModel(replId: $replId) {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+  freeModeTier: useAgentConfigFreeModeTier {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+}
+    `,n=t.gql`
+    fragment AgentWorkspaceSettingsAuthorization on OrgAuthorizations {
+  editSettings {
+    __typename
+    isAuthorized
+    message
+    code
+  }
+}
+    `,s=t.gql`
+    query GetAgentRepl($replId: String!) {
+  getRepl(id: $replId) {
+    __typename
+    ... on Repl {
+      id
+      timeCreated
+      authorizations {
+        maxModeAvailability {
+          disabled
+        }
+        configureAgentModelSettings {
+          isAuthorized
+          message
+          code
+        }
+        useFreeLiteTaskAutoApproval {
+          isAuthorized
+          message
+          code
+        }
+      }
+      org {
+        id
+        slug
+        dealContext {
+          dealType
+        }
+      }
+      user {
+        id
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `,l=t.gql`
+    query GetAgentAutoPublishAuthorization($replId: String!, $isPrivate: Boolean!) {
+  getRepl(id: $replId) {
+    __typename
+    ... on Repl {
+      id
+      authorizations {
+        autoPublishDeployment: redeployDeployment(
+          provider: cloud_run
+          isPrivate: $isPrivate
+        ) {
+          isAuthorized
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `,a=t.gql`
+    query GetAgentReplAuthorizations($orgId: String, $ownerUserId: Int!, $replId: String!) {
+  currentUser {
+    id
+    personalOrgAuthorizations {
+      ... on OrgAuthorizations {
+        ...AgentWorkspaceAuthorizations
+      }
+      ... on Error {
+        message
+      }
+    }
+    org(orgId: $orgId) {
+      ... on Org {
+        id
+        authorizations {
+          ... on OrgAuthorizations {
+            ...AgentWorkspaceAuthorizations
+            ...AgentWorkspaceSettingsAuthorization
+          }
+        }
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+  replOwner: user(id: $ownerUserId) {
+    id
+    paidAgentAuthorization(replId: $replId) {
+      ... on OrgAuthorization {
+        isAuthorized
+        message
+        code
+      }
+      ... on Error {
+        message
+      }
+    }
+    defaultAdvancedAgentModelAuthorization(replId: $replId) {
+      ... on OrgAuthorization {
+        isAuthorized
+        message
+        code
+      }
+      ... on Error {
+        message
+      }
+    }
+    turboAgentModelAuthorization(replId: $replId) {
+      ... on OrgAuthorization {
+        isAuthorized
+        message
+        code
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    ${i}
+${n}`;e.s(["useGetAgentAutoPublishAuthorizationQuery",0,function(e){let t={...o,...e};return r.useQuery(l,t)},"useGetAgentReplAuthorizationsQuery",0,function(e){let t={...o,...e};return r.useQuery(a,t)},"useGetAgentReplQuery",0,function(e){let t={...o,...e};return r.useQuery(s,t)}])},29079,e=>{"use strict";var t=e.i(908796),r=e.i(890639),o=e.i(211719);let i={__typename:"OrgAuthorization",isAuthorized:!1,message:"Free agent is not available in personal repls for guests",code:t.OrgAuthorizationCode.InsufficientPermissions},n={__typename:"OrgAuthorization",isAuthorized:!0,message:"",code:t.OrgAuthorizationCode.Authorized},s={__typename:"OrgAuthorization",isAuthorized:!1,message:"Quick Edit authorization is not available for guests",code:t.OrgAuthorizationCode.InsufficientPermissions},l={__typename:"OrgAuthorization",isAuthorized:!1,message:"Auto model selection is not available for guests",code:t.OrgAuthorizationCode.InsufficientPermissions},a={__typename:"OrgAuthorization",isAuthorized:!1,message:"Auto mode is not available for guests",code:t.OrgAuthorizationCode.InsufficientPermissions};e.s(["useAgentAuthorization",0,function(e){let u=(0,o.default)(),{orgId:d,isMaxModeDisabled:g,orgSlug:p,orgDealType:f,ownerUserId:c,projectCreatedAt:m,configureAgentModelSettings:A,freeLiteTaskAutoApproval:h,refetch:E,loading:M,error:R}=function(e=!1){let t=(0,o.default)(),{data:i,loading:n,error:s,refetch:l}=(0,r.useGetAgentReplQuery)({variables:{replId:t??""},skip:e||null===t}),a=i?.getRepl.__typename==="Repl"?i.getRepl.authorizations?.maxModeAvailability:void 0;return{isMaxModeDisabled:a?.disabled??!1,orgId:i?.getRepl.__typename==="Repl"?i.getRepl.org?.id:void 0,orgSlug:i?.getRepl.__typename==="Repl"?i.getRepl.org?.slug:void 0,orgDealType:i?.getRepl.__typename==="Repl"?i.getRepl.org?.dealContext.dealType:void 0,ownerUserId:i?.getRepl.__typename==="Repl"?i.getRepl.user?.id:void 0,projectCreatedAt:i?.getRepl.__typename==="Repl"?i.getRepl.timeCreated:void 0,configureAgentModelSettings:i?.getRepl.__typename==="Repl"?i.getRepl.authorizations?.configureAgentModelSettings:void 0,freeLiteTaskAutoApproval:i?.getRepl.__typename==="Repl"?i.getRepl.authorizations?.useFreeLiteTaskAutoApproval:void 0,loading:n,error:s,refetch:l}}(e?.skip),{data:S,loading:U,error:v,refetch:_}=(0,r.useGetAgentReplAuthorizationsQuery)({variables:{orgId:d,ownerUserId:c??0,replId:u??""},skip:e?.skip||!c||null===u,pollInterval:e?.pollInterval&&d?e.pollInterval:void 0}),y=async()=>{e?.skip||null===u||await Promise.all([E(),_()])},b=S?.currentUser?.id,C=!!b&&!!c&&b===c,O={isMaxModeDisabled:g,configureAgentModelSettings:A,freeLiteTaskAutoApproval:h,projectCreatedAt:m};if(M||U)return{loading:!0,refetch:y,orgId:void 0,orgSlug:void 0,...O};if(R||v)return{loading:!1,refetch:y,orgId:void 0,orgSlug:void 0,...O};if(d)return{authorizations:S?.currentUser?.org.__typename==="Org"?S.currentUser.org.authorizations:void 0,loading:!1,refetch:y,isOwner:C,isOrgRepl:!0,isGuestInPersonalRepl:!1,orgId:d,orgSlug:p,orgDealType:f,...O};if(!c)return{authorizations:void 0,loading:!1,refetch:y,isOwner:C,isOrgRepl:!1,orgSlug:void 0,...O};if(C){let e=S?.currentUser?.personalOrgAuthorizations;return{authorizations:e?.__typename==="OrgAuthorizations"?e:void 0,loading:!1,refetch:y,isOwner:C,isOrgRepl:!1,isGuestInPersonalRepl:!1,orgSlug:void 0,...O}}let I=S?.replOwner?.paidAgentAuthorization,P=S?.replOwner?.defaultAdvancedAgentModelAuthorization,z=S?.replOwner?.turboAgentModelAuthorization,T=S?.currentUser?.personalOrgAuthorizations,L=T?.__typename==="OrgAuthorizations"?T.quickEditAgentModel:void 0,F=T?.__typename==="OrgAuthorizations"?T.perTierAutoMode:void 0;return I?.__typename==="OrgAuthorization"?{authorizations:{__typename:"OrgAuthorizations",paidAgent:I,freeAgent:i,turboAgentModel:z?.__typename==="OrgAuthorization"?z:{__typename:"OrgAuthorization",isAuthorized:!1,message:"Turbo mode authorization is not available for guests",code:t.OrgAuthorizationCode.InsufficientPermissions},quickEditAgentModel:L??s,highEffortAgentModel:{__typename:"OrgAuthorization",isAuthorized:!0,message:"",code:t.OrgAuthorizationCode.Authorized},perTierAutoMode:F??l,intelligentAutoMode:a,defaultAdvancedAgentModel:P?.__typename==="OrgAuthorization"?P:{__typename:"OrgAuthorization",isAuthorized:!1,message:"Default advanced agent model check is not available for guests",code:t.OrgAuthorizationCode.InsufficientPermissions},freeModeTier:n},loading:!1,refetch:y,isOwner:C,isOrgRepl:!1,isGuestInPersonalRepl:!0,orgSlug:void 0,...O}:{authorizations:void 0,loading:!1,refetch:y,isOwner:C,isOrgRepl:!1,isGuestInPersonalRepl:!0,orgSlug:void 0,...O}},"useAgentAutoPublishAuthorization",0,function({replId:e,isPrivate:t,skip:o=!1}){let{data:i,error:n,loading:s}=(0,r.useGetAgentAutoPublishAuthorizationQuery)({variables:{replId:e,isPrivate:t},skip:o,fetchPolicy:"cache-first"}),l=i?.getRepl.__typename==="Repl"?i.getRepl.authorizations.autoPublishDeployment:void 0;return{isAuthorized:void 0===n&&l?.isAuthorized===!0,loading:s}}])},89103,e=>{"use strict";var t=e.i(335421);e.s(["getDefaultModelOption",0,function(e){let r=e?.filter(e=>void 0===e.authorization);return r?.find(e=>e.isDefault)??r?.find(e=>t.USER_REPL_TIER_AUTO_MODEL_SLUGS.has(e.slug))??r?.find(e=>e.isRecommended)??r?.[0]}])},615593,e=>{"use strict";var t=e.i(349565);function r(e){switch(e.modelProfile){case"FREE":return"free";case"LITE":return"lite";case"POWER":case"TURBO":return"power";case"ECONOMY":case"UNSPECIFIED":return"economy"}}let o=["lite","economy","power"];function i(e){return o.some(t=>void 0!==e[t])?o.filter(t=>!e[t]?.length):void 0}function n(e){switch(e){case"free":return"FREE";case"lite":return"LITE";case"power":return"POWER";case"economy":return"ECONOMY"}}function s(e){return"TURBO"===e.modelProfile}let l=[...t.LITE_MODEL_SLUGS,...t.ECONOMY_MODEL_SLUGS,...t.POWER_MODEL_SLUGS];e.s(["getAgentConfigDiffForEffortClear",0,function(e){let t=l.find(t=>t===e);return void 0===t?null:{modelEfforts:{[t]:void 0},enableHighEffort:!1}},"getAgentConfigDiffForEffortPick",0,function(e,t){let r=l.find(t=>t===e);return void 0===r?null:{modelEfforts:{[r]:t},enableHighEffort:!1}},"getAgentConfigDiffForModelClear",0,function(e){switch(e){case"lite":return{liteModel:void 0};case"power":return{powerModel:void 0};case"economy":return{economyModel:void 0};case"free":return{}}},"getAgentConfigDiffForModelPick",0,function(e,r){if("lite"===e){let e=t.LITE_MODEL_SLUGS.find(e=>e===r);return void 0!==e?{liteModel:e}:null}if("economy"===e){let e=t.ECONOMY_MODEL_SLUGS.find(e=>e===r);return void 0!==e?{economyModel:e}:null}if("power"===e){let e=t.POWER_MODEL_SLUGS.find(e=>e===r);return void 0!==e?{powerModel:e}:null}return null},"getAgentConfigDiffForUIMode",0,function(e,t=!1){let r=n(e),o=t?{enableTurbo:!1}:{};return"lite"===e?{modelProfile:r,mode:"BUILD",...o}:{modelProfile:r,...o}},"getAgentConfigTriggerMode",0,function(e){return!0===e.intelligentAutoMode?"auto":r(e)},"getModelProfileForUIMode",0,n,"getSelectedEffortForModel",0,function(e,t){let r=l.find(t=>t===e);return void 0===r?void 0:t.modelEfforts?.[r]},"getSelectedModelForUIMode",0,function(e,t){switch(e){case"power":return t.powerModel;case"lite":return t.liteModel;case"economy":return t.economyModel;case"free":return}},"getUIModeFromAgentConfig",0,r,"hasServedAgentModels",0,function(e){return Object.values(e).some(e=>void 0!==e&&e.length>0)},"isAgentConfigTriggerOrange",0,function(e,t){return!t&&(s(e)||!0===e.enableHighEffort)},"isSelectedAgentModeUnavailable",0,function(e,t){return i(t)?.includes(r(e))??!1},"isTurboEnabled",0,s,"unavailableAgentModes",0,i])},640326,e=>{"use strict";var t=e.i(351623),r=e.i(721037),o=e.i(344480),i=e.i(975473),n=e.i(299020);let s={},l=t.gql`
+    query ChateauAgentConfigPersistence($replId: String!) {
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      currentUserSettings {
+        isBootstrapped
+        ...UserReplSettingsFragment
+      }
+    }
+  }
+}
+    ${r.UserReplSettingsFragmentFragmentDoc}`,a=t.gql`
+    query ChateauAvailableAgentModelsRefresh($replId: String!) {
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      currentUserSettings {
+        visibleAgentModelsByMode {
+          mode
+          tiers {
+            tier
+            defaultModel
+            models {
+              model
+              label
+              isDefault
+              isRecommended
+              provider
+              relativeCost
+              recommendedEffort
+              authorization {
+                isAuthorized
+                code
+                message
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `,u=t.gql`
+    mutation UpdateChateauAgentConfig($input: UpdateCurrentUserReplSettingsInput!) {
+  updateCurrentUserReplSettings(input: $input) {
+    __typename
+    ... on UpdateCurrentUserReplSettingsPayload {
+      userReplSettings {
+        isBootstrapped
+        ...UserReplSettingsFragment
+      }
+    }
+    ... on UserError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+  }
+}
+    ${r.UserReplSettingsFragmentFragmentDoc}`;e.s(["useChateauAgentConfigPersistenceQuery",0,function(e){let t={...s,...e};return o.useQuery(l,t)},"useChateauAvailableAgentModelsRefreshLazyQuery",0,function(e){let t={...s,...e};return i.useLazyQuery(a,t)},"useChateauAvailableAgentModelsRefreshQuery",0,function(e){let t={...s,...e};return o.useQuery(a,t)},"useUpdateChateauAgentConfigMutation",0,function(e){let t={...s,...e};return n.useMutation(u,t)}])},811120,e=>{"use strict";var t=e.i(389959),r=e.i(640326),o=e.i(473072),i=e.i(211719),n=e.i(600426);function s(){let e=(0,i.default)(),{isComplete:t}=(0,n.useUserReplSettingsBootstrapState)();return(0,r.useChateauAvailableAgentModelsRefreshQuery)({variables:{replId:e??""},skip:!t||null===e,errorPolicy:"none",notifyOnNetworkStatusChange:!0})}e.s(["useChateauAgentModelCatalogQuery",0,s,"useChateauAgentSettingsRead",0,function(){let e=(0,o.default)(),{isComplete:i}=(0,n.useUserReplSettingsBootstrapState)(),{data:l,loading:a,refetch:u}=(0,r.useChateauAgentConfigPersistenceQuery)({variables:{replId:e},skip:!i,errorPolicy:"none",notifyOnNetworkStatusChange:!0}),d=s(),g=l?.getRepl?.__typename==="Repl"?l.getRepl.currentUserSettings:void 0,p=d.data?.getRepl?.__typename==="Repl"?d.data.getRepl.currentUserSettings?.visibleAgentModelsByMode:void 0,f=d.refetch,c=(0,t.useCallback)(()=>{Promise.allSettled([...null==g?[u()]:[],...void 0===p?[f()]:[]])},[g,p,u,f]);return(0,t.useMemo)(()=>i?null!=g&&void 0!==p?{status:"ready",settings:g,models:p}:a||d.loading?{status:"loading"}:{status:"error",retry:c}:{status:"loading"},[i,g,p,a,d.loading,c])}])},462669,e=>{"use strict";var t=e.i(389959),r=e.i(830675),o=e.i(908796),i=e.i(640326),n=e.i(11990),s=e.i(335421),l=e.i(211025),a=e.i(473072),u=e.i(29079),d=e.i(577671),g=e.i(786864),p=e.i(89103),f=e.i(349565),c=e.i(615593),m=e.i(811120);let A={free:{},lite:f.LITE_MODEL_BY_GQL,economy:f.ECONOMY_MODEL_BY_GQL,power:f.POWER_MODEL_BY_GQL},h={[o.UserReplModelTier.Lite]:"lite",[o.UserReplModelTier.Economy]:"economy",[o.UserReplModelTier.Power]:"power",[o.UserReplModelTier.Free]:"free"},E={[o.AgentModelProvider.Anthropic]:"anthropic",[o.AgentModelProvider.Deepseek]:"deepseek",[o.AgentModelProvider.Google]:"google",[o.AgentModelProvider.Moonshot]:"moonshot",[o.AgentModelProvider.Openai]:"openai",[o.AgentModelProvider.Replit]:"replit",[o.AgentModelProvider.Zai]:"zai"},M={[o.UserReplAgentEffort.Low]:"low",[o.UserReplAgentEffort.Medium]:"medium",[o.UserReplAgentEffort.High]:"high",[o.UserReplAgentEffort.ExtraHigh]:"xhigh",[o.UserReplAgentEffort.Max]:"max"},R={low:o.UserReplAgentEffort.Low,medium:o.UserReplAgentEffort.Medium,high:o.UserReplAgentEffort.High,xhigh:o.UserReplAgentEffort.ExtraHigh,max:o.UserReplAgentEffort.Max},S={build:o.UserReplAgentMode.Build,design:o.UserReplAgentMode.Design};function U(e,t){return v(e,t).optionsByUIMode}function v(e,t){let r=e.find(e=>e.mode===S[t]);return r?_(r.tiers):{optionsByUIMode:{},defaultModelByUIMode:{}}}function _(e){let t={};for(let{tier:r,defaultModel:o}of e){let e=h[r],i=null==o?void 0:A[e][o];void 0!==i&&(t[e]=i)}return{optionsByUIMode:function(e){let t={};for(let r of e){let e=h[r.tier],o=A[e],i=r.models.flatMap(e=>{let t=o[e.model];return void 0!==t?[{slug:t,label:e.label,isDefault:e.isDefault,isRecommended:e.isRecommended,provider:E[e.provider],relativeCost:e.relativeCost,recommendedEffort:null==e.recommendedEffort?null:M[e.recommendedEffort],...e.authorization?.isAuthorized===!1?{authorization:e.authorization}:{}}]:[]});i.length>0&&(t[e]=i)}return t}(e),defaultModelByUIMode:t}}function y(e,t){return t?e:Object.fromEntries(Object.entries(e).map(([e,t])=>{var r;let[o,i]=[(r=t??[]).filter(e=>s.USER_REPL_TIER_AUTO_MODEL_SLUGS.has(e.slug)),r.filter(e=>!s.USER_REPL_TIER_AUTO_MODEL_SLUGS.has(e.slug))];return[e,function(e,{lostDefault:t,lostRecommended:r}){let o=e.find(e=>e.isDefault)??e.find(e=>void 0===e.authorization);if(void 0===o)return e;let i=e.some(e=>e.isRecommended);return e.map(e=>e===o?{...e,isDefault:e.isDefault||t,isRecommended:e.isRecommended||r&&!i}:e)}(i,{lostDefault:o.some(e=>e.isDefault),lostRecommended:o.some(e=>e.isRecommended)})]}))}function b(e="build"){let{data:r}=(0,m.useChateauAgentModelCatalogQuery)(),o=r?.getRepl?.__typename==="Repl"?r.getRepl.currentUserSettings?.visibleAgentModelsByMode:void 0;return(0,t.useMemo)(()=>o?v(o,e):{optionsByUIMode:{},defaultModelByUIMode:{}},[o,e])}function C(){let e=(0,a.default)(),[r]=(0,i.useChateauAvailableAgentModelsRefreshLazyQuery)({fetchPolicy:"network-only",errorPolicy:"none"});return(0,t.useCallback)(()=>r({variables:{replId:e}}),[r,e])}let O=["liteModel","economyModel","powerModel"];function I(e,t={}){if(!e)return{mode:"UNSPECIFIED",modelProfile:"UNSPECIFIED",enableTurbo:void 0,enableAutomatedTesting:void 0,enableHighEffort:void 0,liteModel:void 0,economyModel:void 0,powerModel:void 0,modelEfforts:void 0};let r=new Set(e.explicitFields),i=r.has(o.UserReplAgentSettingsField.IsTurboEnabled)&&null!=e.isTurboEnabled?e.isTurboEnabled:void 0,n=(()=>{if(!r.has(o.UserReplAgentSettingsField.ModelTier))return"UNSPECIFIED";switch(e.modelTier){case o.UserReplModelTier.Lite:return"LITE";case o.UserReplModelTier.Economy:return"ECONOMY";case o.UserReplModelTier.Power:return!0===i?"TURBO":"POWER";case o.UserReplModelTier.Free:return"FREE";default:return"UNSPECIFIED"}})(),s=r.has(o.UserReplAgentSettingsField.IsPlanModeEnabled)?!0===e.isPlanModeEnabled?"PLAN":"BUILD":"UNSPECIFIED",l=r.has(o.UserReplAgentSettingsField.IsAppTestingEnabled)&&null!=e.isAppTestingEnabled?e.isAppTestingEnabled:void 0,a=r.has(o.UserReplAgentSettingsField.IsHighEffortEnabled)&&null!=e.isHighEffortEnabled?e.isHighEffortEnabled:void 0,u=P(e),d=z(e),g=r.has(o.UserReplAgentSettingsField.LiteModel)&&null!=e.liteModel?T(f.LITE_MODEL_BY_GQL[e.liteModel],t.lite):void 0,p=r.has(o.UserReplAgentSettingsField.EconomyModel)&&null!=e.economyModel?T(f.ECONOMY_MODEL_BY_GQL[e.economyModel],t.economy):void 0;return{mode:s,modelProfile:n,enableTurbo:i,enableAutomatedTesting:l,enableHighEffort:a,intelligentAutoMode:u,autoPublish:d,liteModel:g,economyModel:p,powerModel:r.has(o.UserReplAgentSettingsField.PowerModel)&&null!=e.powerModel?T(f.POWER_MODEL_BY_GQL[e.powerModel],t.power):void 0,modelEfforts:(()=>{let t={};for(let r of e.modelEfforts){let e=f.MODEL_SLUG_BY_GQL[r.model];void 0!==e&&(t[e]=M[r.effort])}return Object.keys(t).length>0?t:void 0})()}}function P(e){if(e?.explicitFields.includes(o.UserReplAgentSettingsField.IsIntelligentAutoModeEnabled))return e.isIntelligentAutoModeEnabled??void 0}function z(e){if(e?.explicitFields.includes(o.UserReplAgentSettingsField.IsAutoPublishEnabled))return e.isAutoPublishEnabled??void 0}function T(e,t){return void 0===e||void 0===t||t.some(t=>t.slug===e&&void 0===t.authorization)?e:void 0}function L(e,t="build",r=!1,i=!0){if("design"===t){let t=function(e){let t={};if(void 0!==e.modelProfile)switch(e.modelProfile){case"LITE":t.modelTier=o.UserReplModelTier.Lite;break;case"ECONOMY":t.modelTier=o.UserReplModelTier.Economy;break;case"POWER":case"TURBO":t.modelTier=o.UserReplModelTier.Power;break;case"FREE":t.modelTier=o.UserReplModelTier.Free}return void 0!==e.enableAutomatedTesting&&(t.isAppTestingEnabled=e.enableAutomatedTesting),F(e,t),Object.keys(t).length>0?{designModeSettings:t}:{}}(e);return void 0!==e.intelligentAutoMode&&(t.isIntelligentAutoModeEnabled=e.intelligentAutoMode),void 0!==e.autoPublish&&(t.isAutoPublishEnabled=e.autoPublish),{agentSettings:t,taskSettings:{}}}let n={},s={};if(void 0!==e.modelProfile)switch(e.modelProfile){case"LITE":n.modelTier=r?null:o.UserReplModelTier.Lite,n.isPlanModeEnabled=!1,!1===i&&(s.isAutoApprovePlanEnabled=!1);break;case"ECONOMY":n.modelTier=o.UserReplModelTier.Economy;break;case"POWER":case"TURBO":n.modelTier=o.UserReplModelTier.Power;break;case"FREE":n.modelTier=o.UserReplModelTier.Free,!1===i&&(s.isAutoApprovePlanEnabled=!1)}return void 0!==e.mode&&("PLAN"===e.mode?n.isPlanModeEnabled=!0:"BUILD"===e.mode&&(n.isPlanModeEnabled=!1)),void 0!==e.enableAutomatedTesting&&(n.isAppTestingEnabled=e.enableAutomatedTesting),void 0!==e.enableTurbo&&(n.isTurboEnabled=e.enableTurbo),void 0!==e.enableHighEffort&&(n.isHighEffortEnabled=e.enableHighEffort),void 0!==e.intelligentAutoMode&&(n.isIntelligentAutoModeEnabled=e.intelligentAutoMode),void 0!==e.autoPublish&&(n.isAutoPublishEnabled=e.autoPublish),F(e,n),{agentSettings:n,taskSettings:s}}function F(e,t){if("liteModel"in e&&(t.liteModel=void 0===e.liteModel?null:f.GQL_BY_MODEL_SLUG[e.liteModel]),"economyModel"in e&&(t.economyModel=void 0===e.economyModel?null:f.GQL_BY_MODEL_SLUG[e.economyModel]),"powerModel"in e&&(t.powerModel=void 0===e.powerModel?null:f.GQL_BY_MODEL_SLUG[e.powerModel]),void 0!==e.modelEfforts){let r=Object.entries(e.modelEfforts);r.length>0&&(t.modelEfforts=r.map(([e,t])=>({model:f.GQL_BY_MODEL_SLUG[e],effort:void 0===t?null:R[t]})))}}e.s(["availableAgentModeOptions",0,function({options:e,canUpgradeToTurbo:t,isPerTierAutoModeAvailable:r}){let o=y(e,r);return t?o:Object.fromEntries(Object.entries(o).map(([e,t])=>[e,t?.filter(e=>void 0===e.authorization)]))},"filterAutoModeModelOptions",0,y,"getModelDefaultsForSend",0,function(e,t={}){let{isEffortCapped:r=!1,isPerTierAutoModeAvailable:o=!0}=t,i=y(e,o),s={};for(let e of["lite","economy","power"]){let t=(0,p.getDefaultModelOption)(i[e])?.slug;void 0!==t&&(s[e]=t)}let a={},u={...s};void 0!==s.power&&i.power?.every(e=>e.slug!==n.FABLE_5_MODEL_SLUG)&&(a.power=s.power);let d={};if(r)for(let e of Object.values(i))for(let t of e??[]){if(null===t.recommendedEffort)continue;let e=(0,l.clampToLadder)(t.recommendedEffort,l.CAPPED_EFFORT_LEVELS);e!==t.recommendedEffort&&(d[t.slug]=e)}return{defaultByTier:s,compatibilityPinByTier:a,...Object.keys(u).length>0&&{pinnedDefaultByTier:u},...Object.keys(d).length>0&&{cappedEffortByModel:d}}},"mapAvailableAgentModelCatalog",0,_,"mapChateauConfigDiffToUserSettingsInput",0,L,"modeModelOptionsFor",0,function(e,t){let r={};for(let o of Object.values(h)){let i=e[o];if(void 0===i||0===i.length)continue;let n=(0,c.getSelectedModelForUIMode)(o,t);r[o]=i.find(e=>e.slug===n)??(0,p.getDefaultModelOption)(i)}return r},"modelOptionsForMode",0,U,"useAvailableAgentModelCatalog",0,b,"useAvailableAgentModels",0,function(e="build"){return b(e).optionsByUIMode},"useChateauAgentSettingsPersistence",0,function(e="build"){let n=(0,a.default)(),{shouldSeeFreemiumExperience:s}=(0,g.useShouldSeeFreemiumExperience)(n),{freeLiteTaskAutoApproval:l,loading:p}=(0,u.useAgentAuthorization)(),c=p||l?.isAuthorized!==!1,A=(0,m.useChateauAgentSettingsRead)(),h=C(),E=(0,t.useRef)(Promise.resolve()),[R]=(0,i.useUpdateChateauAgentConfigMutation)();return{initialConfig:(0,t.useMemo)(()=>{if("ready"!==A.status)return;let t=A.settings.agentSettings,r=U(A.models,e);return"design"===e?function(e,t={},r=null){let i={mode:"UNSPECIFIED",modelProfile:"UNSPECIFIED",enableTurbo:void 0,enableAutomatedTesting:void 0,enableHighEffort:void 0,intelligentAutoMode:P(r),autoPublish:z(r),liteModel:void 0,economyModel:void 0,powerModel:void 0,modelEfforts:void 0};if(!e)return i;let n=new Set(e.explicitFields),s=(()=>{if(!n.has(o.UserReplModeAgentSettingsField.ModelTier))return"UNSPECIFIED";switch(e.modelTier){case o.UserReplModelTier.Lite:return"LITE";case o.UserReplModelTier.Economy:return"ECONOMY";case o.UserReplModelTier.Power:return"POWER";case o.UserReplModelTier.Free:return"FREE";default:return"UNSPECIFIED"}})(),l=n.has(o.UserReplModeAgentSettingsField.IsAppTestingEnabled)&&null!=e.isAppTestingEnabled?e.isAppTestingEnabled:void 0,a=n.has(o.UserReplModeAgentSettingsField.LiteModel)&&null!=e.liteModel?T(f.LITE_MODEL_BY_GQL[e.liteModel],t.lite):void 0,u=n.has(o.UserReplModeAgentSettingsField.EconomyModel)&&null!=e.economyModel?T(f.ECONOMY_MODEL_BY_GQL[e.economyModel],t.economy):void 0,d=n.has(o.UserReplModeAgentSettingsField.PowerModel)&&null!=e.powerModel?T(f.POWER_MODEL_BY_GQL[e.powerModel],t.power):void 0,g=(()=>{let t={};for(let r of e.modelEfforts){let e=f.MODEL_SLUG_BY_GQL[r.model];void 0!==e&&(t[e]=M[r.effort])}return Object.keys(t).length>0?t:void 0})();return{...i,modelProfile:s,enableAutomatedTesting:l,liteModel:a,economyModel:u,powerModel:d,modelEfforts:g}}(t?.designModeSettings??null,r,t):I(t,r)},[A,e]),persistConfig:(0,t.useCallback)(async t=>{var o;let i=L(t,e,s,c);if(Object.values((o=i).agentSettings).some(e=>void 0!==e)||Object.values(o.taskSettings).some(e=>void 0!==e))try{let e=await R({variables:{input:{replId:n,agentSettings:i.agentSettings,taskSettings:i.taskSettings}},update:(e,t)=>{let r=t.data?.updateCurrentUserReplSettings;r?.__typename==="UpdateCurrentUserReplSettingsPayload"&&(0,d.writeCurrentUserReplSettingsToCache)({cache:e,replId:n,settings:r.userReplSettings})}}),o=e.data?.updateCurrentUserReplSettings;if(o?.__typename!=="UpdateCurrentUserReplSettingsPayload")return void r.captureMessage("updateCurrentUserReplSettings returned non-payload",{extra:{replId:n,typename:o?.__typename,message:o&&"message"in o?o.message:void 0}});O.some(e=>e in t&&void 0===t[e])&&(E.current=E.current.then(h).catch(()=>void 0))}catch(e){r.captureException(e,{extra:{message:"Error persisting chateau agent config",replId:n,configDiff:t}})}},[R,n,h,e,s,c]),loading:"ready"!==A.status||p,retrySettings:"error"===A.status?A.retry:void 0}},"useRawBuildAgentConfig",0,function(){let e=(0,m.useChateauAgentSettingsRead)();return(0,t.useMemo)(()=>I("ready"===e.status?e.settings.agentSettings:null,"ready"===e.status?U(e.models,"build"):{}),[e])},"useRefreshAvailableAgentModels",0,C])},721037,e=>{"use strict";var t=e.i(351623),r=e.i(344480);e.i(975473);var o=e.i(299020);let i={},n=t.gql`
+    fragment UserReplSettingsFragment on UserReplSettings {
+  agentSettings {
+    explicitFields
+    modelTier
+    liteModel
+    economyModel
+    powerModel
+    modelEfforts {
+      model
+      effort
+    }
+    isTurboEnabled
+    isHighEffortEnabled
+    isIntelligentAutoModeEnabled
+    isPlanModeEnabled
+    isAppTestingEnabled
+    isAutoPublishEnabled
+    isCodeOptimizationEnabled
+    isAutoCheckpointingEnabled
+    designModeSettings {
+      explicitFields
+      modelTier
+      liteModel
+      economyModel
+      powerModel
+      modelEfforts {
+        model
+        effort
+      }
+      isAppTestingEnabled
+    }
+  }
+  taskSettings {
+    explicitFields
+    isAutoApprovePlanEnabled
+    isAutoMergeEnabled
+  }
+}
+    `,s=t.gql`
+    fragment CurrentUserReplSettingsCacheWrite on Repl {
+  id
+  currentUserSettings {
+    ...UserReplSettingsFragment
+  }
+}
+    ${n}`,l=t.gql`
+    query CurrentUserReplSettings($replId: String!) {
+  currentUser {
+    id
+  }
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      currentUserSettings {
+        ...UserReplSettingsFragment
+      }
+    }
+  }
+}
+    ${n}`,a=t.gql`
+    mutation UpdateCurrentUserReplSettings($input: UpdateCurrentUserReplSettingsInput!) {
+  updateCurrentUserReplSettings(input: $input) {
+    __typename
+    ... on UpdateCurrentUserReplSettingsPayload {
+      userReplSettings {
+        ...UserReplSettingsFragment
+      }
+    }
+    ... on UserError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+  }
+}
+    ${n}`;e.s(["CurrentUserReplSettingsCacheWriteFragmentDoc",0,s,"UserReplSettingsFragmentFragmentDoc",0,n,"useCurrentUserReplSettingsQuery",0,function(e){let t={...i,...e};return r.useQuery(l,t)},"useUpdateCurrentUserReplSettingsMutation",0,function(e){let t={...i,...e};return o.useMutation(a,t)}])},577671,e=>{"use strict";var t=e.i(389959),r=e.i(830675),o=e.i(721037);function i({cache:e,replId:t,settings:r}){let n=e.identify({__typename:"Repl",id:t});e.writeFragment({id:n,fragment:o.CurrentUserReplSettingsCacheWriteFragmentDoc,fragmentName:"CurrentUserReplSettingsCacheWrite",data:{__typename:"Repl",id:t,currentUserSettings:r}}),e.modify({id:n,fields:{currentUserSettings:e=>({...e,...r})}})}e.s(["useCurrentUserReplSettings",0,function(e){let{data:n,loading:s}=(0,o.useCurrentUserReplSettingsQuery)({variables:{replId:e}}),[l]=(0,o.useUpdateCurrentUserReplSettingsMutation)(),a=n?.getRepl?.__typename==="Repl"?n.getRepl:null,u=a?.currentUserSettings?.agentSettings??null;return{loading:s,agentSettings:u,taskSettings:a?.currentUserSettings?.taskSettings??null,updateSettings:(0,t.useCallback)(async t=>{try{let o=await l({variables:{input:{replId:e,...t}},update:(t,r)=>{let o=r.data?.updateCurrentUserReplSettings;o?.__typename==="UpdateCurrentUserReplSettingsPayload"&&i({cache:t,replId:e,settings:o.userReplSettings})}}),n=o.data?.updateCurrentUserReplSettings;if(n?.__typename==="UpdateCurrentUserReplSettingsPayload")return!0;return r.captureMessage("updateCurrentUserReplSettings returned non-payload",{extra:{replId:e,typename:n?.__typename,message:n&&"message"in n?n.message:void 0}}),!1}catch(o){return r.captureException(o,{extra:{message:"Error updating current user repl settings",replId:e,input:t}}),!1}},[e,l])}},"writeCurrentUserReplSettingsToCache",0,i])},734135,e=>{"use strict";var t=e.i(351623),r=e.i(344480);e.i(975473);let o={},i=t.gql`
+    query GetShouldSeeFreemiumExperience($replId: String!) {
+  getRepl(id: $replId) {
+    __typename
+    ... on Repl {
+      id
+      authorizations {
+        viewFreemiumExperience {
+          isAuthorized
+        }
+      }
+    }
+  }
+}
+    `;e.s(["useGetShouldSeeFreemiumExperienceQuery",0,function(e){let t={...o,...e};return r.useQuery(i,t)}])},786864,e=>{"use strict";var t=e.i(734135);e.s(["useShouldSeeFreemiumExperience",0,function(e,r){let{data:o,loading:i,error:n,refetch:s}=(0,t.useGetShouldSeeFreemiumExperienceQuery)({variables:{replId:e},skip:r?.skip});return{shouldSeeFreemiumExperience:o?.getRepl.__typename==="Repl"&&o.getRepl.authorizations.viewFreemiumExperience.isAuthorized,loading:i,error:n,refetch:s}}])},925712,e=>{"use strict";var t=e.i(351623),r=e.i(721037),o=e.i(344480);e.i(975473);var i=e.i(299020);let n={},s=t.gql`
+    fragment UserReplSettingsBootstrapFragment on UserReplSettings {
+  isBootstrapped
+  ...UserReplSettingsFragment
+}
+    ${r.UserReplSettingsFragmentFragmentDoc}`,l=t.gql`
+    query UserReplSettingsBootstrap($replId: String!) {
+  currentUser {
+    id
+  }
+  getRepl(id: $replId) {
+    ... on Repl {
+      id
+      currentUserSettings {
+        ...UserReplSettingsBootstrapFragment
+      }
+    }
+  }
+}
+    ${s}`,a=t.gql`
+    mutation BootstrapCurrentUserReplSettings($input: BootstrapCurrentUserReplSettingsInput!) {
+  bootstrapCurrentUserReplSettings(input: $input) {
+    __typename
+    ... on BootstrapCurrentUserReplSettingsPayload {
+      didBootstrap
+      userReplSettings {
+        ...UserReplSettingsBootstrapFragment
+      }
+    }
+    ... on UserError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on NotFoundError {
+      message
+    }
+  }
+}
+    ${s}`;e.s(["useBootstrapCurrentUserReplSettingsMutation",0,function(e){let t={...n,...e};return i.useMutation(a,t)},"useUserReplSettingsBootstrapQuery",0,function(e){let t={...n,...e};return o.useQuery(l,t)}])},567314,e=>{"use strict";var t=e.i(389959),r=e.i(830675),o=e.i(925712),i=e.i(577671);let n=[250,1e3];async function s({attempt:e,bootstrap:t,replId:o}){try{let e=await t({variables:{input:{replId:o}}}),i=e.data?.bootstrapCurrentUserReplSettings;if(i?.__typename==="BootstrapCurrentUserReplSettingsPayload")return;r.captureMessage("bootstrapCurrentUserReplSettings returned non-payload",{extra:{replId:o,typename:i?.__typename,message:i&&"message"in i?i.message:void 0}})}catch(l){let r=n[e];if(null!=r){var i;return await (i=r,new Promise(e=>{setTimeout(e,i)})),s({attempt:e+1,bootstrap:t,replId:o})}throw l}}e.s(["useUserReplSettingsBootstrap",0,function(e,n){let l=(0,t.useRef)(new Set),[a,u]=(0,t.useState)(()=>({isComplete:!1,isBootstrapping:!1})),{data:d,loading:g}=(0,o.useUserReplSettingsBootstrapQuery)({variables:{replId:n??""},skip:!e||null===n}),[p]=(0,o.useBootstrapCurrentUserReplSettingsMutation)({update(e,t){let r=t.data?.bootstrapCurrentUserReplSettings;r?.__typename!=="BootstrapCurrentUserReplSettingsPayload"||null!==n&&(0,i.writeCurrentUserReplSettingsToCache)({cache:e,replId:n,settings:r.userReplSettings})}}),f=d?.getRepl.__typename==="Repl"?d.getRepl:null,c=d?.currentUser!=null,m=null!=f,A=f?.currentUserSettings?.isBootstrapped===!0;return(0,t.useEffect)(()=>{if(g)return void u({isComplete:!1,isBootstrapping:!1});if(null===n||!c||!m||A)return void u({isComplete:!0,isBootstrapping:!1});if(l.current.has(n))return;l.current.add(n);let e=!1;return u({isComplete:!1,isBootstrapping:!0}),(async()=>{try{await s({attempt:0,bootstrap:p,replId:n})}catch(e){r.captureException(e,{extra:{message:"Error bootstrapping current user repl settings",replId:n}})}finally{e||u({isComplete:!0,isBootstrapping:!1})}})(),()=>{e=!0}},[p,c,m,A,g,n]),a}])},600426,e=>{"use strict";var t=e.i(276385),r=e.i(389959),o=e.i(567314);let i=(0,r.createContext)({isComplete:!0,isBootstrapping:!1});e.s(["UserReplSettingsBootstrapProvider",0,function({children:e,enabled:n=!0,replId:s}){let l=(0,o.useUserReplSettingsBootstrap)(n,s),a=(0,r.useMemo)(()=>({isComplete:l.isComplete,isBootstrapping:l.isBootstrapping}),[l.isComplete,l.isBootstrapping]);return(0,t.jsx)(i.Provider,{value:a,children:e})},"useUserReplSettingsBootstrapState",0,function(){return(0,r.useContext)(i)}])},11990,e=>{"use strict";e.s(["FABLE_5_MODEL_SLUG",0,"claude-fable-5","INTELLIGENT_AUTO_MODEL_SLUG",0,"intelligent-auto","TURBO_CARRYOVER_MODEL_SLUG",0,"claude-5-opus-fast"])}]);
+
+//# debugId=f055816a-4b22-11d3-fcde-957fc0c31a87
+//# sourceMappingURL=3ac2rx-tn6_wd.js.map

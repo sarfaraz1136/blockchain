@@ -1,0 +1,369 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="fce756a1-fbfe-0d30-ea9a-9e1ede09245a")}catch(e){}}();
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,63448,e=>{"use strict";var t=e.i(389959);function a(){return"u"<typeof document||"visible"===document.visibilityState}e.s(["useThrottledCallback",0,function(e,i,{enabled:n=!0,resetKey:s}={}){let r=(0,t.useRef)(e);r.current=e;let o=(0,t.useRef)(n);o.current=n;let l=(0,t.useRef)(Date.now()),c=(0,t.useRef)(1),u=(0,t.useRef)(0),d=(0,t.useRef)(null),p=(0,t.useRef)(!1),k=(0,t.useCallback)(()=>{let e=d.current;null!==e&&(clearTimeout(e),d.current=null)},[]),g=(0,t.useCallback)(()=>{if(!o.current)return;if(!a()){p.current=!0;return}let e=l.current+i*c.current-Date.now();if(e<=0){k(),p.current=!1,l.current=Date.now();let e=u.current;Promise.resolve(r.current()).then(()=>{u.current===e&&(c.current=1)},()=>{u.current===e&&(c.current=Math.min(2*c.current,16))})}else if(null===d.current){let t=setTimeout(()=>{d.current===t&&(d.current=null,g())},e);d.current=t}},[k,i]);(0,t.useEffect)(()=>k,[k]);let m=(0,t.useRef)(s);return(0,t.useEffect)(()=>{Object.is(m.current,s)||(m.current=s,u.current+=1,k(),p.current=!1,c.current=1,l.current=Date.now())},[s,k]),(0,t.useEffect)(()=>{if(!n){k(),p.current=!1;return}l.current=Date.now();let e=()=>{a()&&p.current&&(p.current=!1,g())};return document.addEventListener("visibilitychange",e),()=>{document.removeEventListener("visibilitychange",e)}},[k,n,g]),g}])},253457,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(908796),n=e.i(713443),s=e.i(315317),r=e.i(121900),o=e.i(732637),l=e.i(108501),c=e.i(275240),u=e.i(701951),d=e.i(869347),p=e.i(24382),k=e.i(73559),g=e.i(760845);e.i(214847);var m=e.i(20397),f=e.i(864300),S=e.i(483559);function h(e){return{form:{requestId:e,name:"",description:"",instructions:"",modelProfile:i.WorkspaceRepModelProfile.Power},submission:{kind:"editing"}}}e.s(["WorkspaceRepCreationForm",0,function({onCreate:e,draft:a,renderSlackInstall:h}){let y=(0,f.useIntl)(),{state:B,dispatch:v}=a,{form:w,submission:_}=B,A="saving"===_.kind,R="error"===_.kind&&_.ambiguous,M=A||R,b=y.formatMessage({id:"orgs.workspaceRepSetup.create",defaultMessage:"Create definition"});A?b=y.formatMessage({id:"orgs.workspaceRepSetup.creating",defaultMessage:"Creating definition…"}):R&&(b=y.formatMessage({id:"orgs.workspaceRepSetup.retry",defaultMessage:"Retry creation"}));let F=e=>v({type:"edit",changes:{...e,requestId:crypto.randomUUID()}});return"created"===_.kind?(0,t.jsxs)(g.View,{className:(0,S.tw)("gap-400"),"data-analytics-id":"workspace_rep_setup_result_panel",children:[(0,t.jsx)(g.View,{role:"status",children:(0,t.jsx)(p.StatusBanner,{colorway:"positive",text:y.formatMessage({id:"orgs.workspaceRepSetup.saved",defaultMessage:"Definition and initial configuration saved. This setup does not start an agent."})})}),(0,t.jsxs)(k.TextField,{value:_.definitionId,isReadOnly:!0,children:[(0,t.jsx)(c.Label,{children:(0,t.jsx)(m.FormattedMessage,{id:"orgs.workspaceRepSetup.definitionId",defaultMessage:"Definition ID for the Slack pilot"})}),(0,t.jsx)(l.Input,{})]}),(0,t.jsx)(s.CopyButton,{textToCopy:_.definitionId,text:y.formatMessage({id:"orgs.workspaceRepSetup.copyId",defaultMessage:"Copy definition ID"}),"data-analytics-id":"workspace_rep_copy_definition_button"}),h?.(_.definitionId),(0,t.jsx)(n.Button,{text:y.formatMessage({id:"orgs.workspaceRepSetup.another",defaultMessage:"Create another definition"}),onClick:()=>v({type:"reset",requestId:crypto.randomUUID()}),"data-analytics-id":"workspace_rep_create_another_button"})]}):(0,t.jsxs)(o.Form,{className:(0,S.tw)("gap-400"),onSubmit:async t=>{if(t.preventDefault(),!A){v({type:"submit"});try{v({type:"result",result:await e(w),nextRequestId:crypto.randomUUID()})}catch{v({type:"result",nextRequestId:crypto.randomUUID(),result:{kind:"error",ambiguous:!0,message:y.formatMessage({id:"orgs.workspaceRepSetup.unknownResult",defaultMessage:"Creation could not be confirmed. Retry without changing the request to recover the same definition."})}})}}},"data-analytics-id":"workspace_rep_setup_form",children:[(0,t.jsxs)(k.TextField,{value:w.name,onChange:e=>F({name:e}),isDisabled:M,isRequired:!0,maxLength:200,children:[(0,t.jsx)(c.Label,{children:(0,t.jsx)(m.FormattedMessage,{id:"orgs.workspaceRepSetup.name",defaultMessage:"Name"})}),(0,t.jsx)(l.Input,{placeholder:y.formatMessage({id:"orgs.workspaceRepSetup.nameExample",defaultMessage:"Incident Lurker"})}),(0,t.jsx)(r.FieldError,{})]}),(0,t.jsxs)(k.TextField,{value:w.description,onChange:e=>F({description:e}),isDisabled:M,maxLength:2e3,children:[(0,t.jsx)(c.Label,{children:(0,t.jsx)(m.FormattedMessage,{id:"orgs.workspaceRepSetup.description",defaultMessage:"Description (optional)"})}),(0,t.jsx)(l.Input,{}),(0,t.jsx)(r.FieldError,{})]}),(0,t.jsxs)(k.TextField,{value:w.instructions,onChange:e=>F({instructions:e}),isDisabled:M,isRequired:!0,maxLength:1e5,children:[(0,t.jsx)(c.Label,{children:(0,t.jsx)(m.FormattedMessage,{id:"orgs.workspaceRepSetup.instructions",defaultMessage:"Instructions"})}),(0,t.jsx)(l.MultiLineInput,{rows:8,placeholder:y.formatMessage({id:"orgs.workspaceRepSetup.instructionsExample",defaultMessage:"Describe what this rep should do, what evidence to gather, and its limits."})}),(0,t.jsx)(r.FieldError,{})]}),(0,t.jsxs)(d.Select,{"data-analytics-id":"workspace_rep_model_select",label:y.formatMessage({id:"orgs.workspaceRepSetup.model",defaultMessage:"Model profile"}),selectedKey:w.modelProfile,isDisabled:M,onSelectionChange:e=>{switch(e){case i.WorkspaceRepModelProfile.Lite:case i.WorkspaceRepModelProfile.Economy:case i.WorkspaceRepModelProfile.Power:F({modelProfile:e})}},children:[(0,t.jsx)(u.ListBoxItem,{"data-analytics-id":"workspace_rep_model_lite_option",id:i.WorkspaceRepModelProfile.Lite,label:y.formatMessage({id:"orgs.workspaceRepSetup.lite",defaultMessage:"Lite"})}),(0,t.jsx)(u.ListBoxItem,{"data-analytics-id":"workspace_rep_model_economy_option",id:i.WorkspaceRepModelProfile.Economy,label:y.formatMessage({id:"orgs.workspaceRepSetup.economy",defaultMessage:"Economy"})}),(0,t.jsx)(u.ListBoxItem,{"data-analytics-id":"workspace_rep_model_power_option",id:i.WorkspaceRepModelProfile.Power,label:y.formatMessage({id:"orgs.workspaceRepSetup.power",defaultMessage:"Power"})})]}),(0,t.jsx)(p.StatusBanner,{colorway:"warning",text:y.formatMessage({id:"orgs.workspaceRepSetup.scope",defaultMessage:"This saves a definition only. Groups, connection permissions, connection bindings, and Slack triggers are not configured here. It does not start an agent."})}),"error"===_.kind?(0,t.jsx)(g.View,{role:"alert",children:(0,t.jsx)(p.StatusBanner,{colorway:"negative",text:_.message})}):null,(0,t.jsx)(n.Button,{type:"submit",colorway:"primary",disabled:A||!w.name.trim()||!w.instructions.trim(),text:b,"data-analytics-id":"workspace_rep_create_definition_button"})]})},"useWorkspaceRepDraft",0,function(e){let[t,i]=(0,a.useState)(()=>new Map),n=(0,a.useMemo)(()=>t.get(e)??h(crypto.randomUUID()),[t,e]),s=(0,a.useCallback)(t=>{i(a=>{let i=new Map(a);return i.set(e,function(e,t){switch(t.type){case"edit":if("saving"===e.submission.kind||"error"===e.submission.kind&&e.submission.ambiguous)return e;return{form:{...e.form,...t.changes},submission:{kind:"editing"}};case"submit":if("saving"===e.submission.kind)return e;return{...e,submission:{kind:"saving",recovering:"error"===e.submission.kind&&e.submission.ambiguous}};case"result":{let a="error"===t.result.kind?{...t.result,ambiguous:t.result.ambiguous||"saving"===e.submission.kind&&e.submission.recovering}:t.result,i=e.form;return"created"===a.kind?i=h(t.nextRequestId).form:a.ambiguous||(i={...e.form,requestId:t.nextRequestId}),{form:i,submission:a}}case"reset":return h(t.requestId)}}(a.get(e)??n,t)),i})},[e,n]);return{state:n,dispatch:s}}])},530202,e=>{"use strict";var t=e.i(351623),a=e.i(344480);e.i(975473);var i=e.i(299020);let n={},s=t.gql`
+    query WorkspaceRepCreationAccess($orgId: String!) {
+  getOrg(orgId: $orgId) {
+    ... on Org {
+      id
+      authorizations {
+        createWorkspaceRepDefinition {
+          isAuthorized
+        }
+      }
+    }
+  }
+}
+    `,r=t.gql`
+    mutation CreateWorkspaceRep($input: CreateWorkspaceRepInput!) {
+  createWorkspaceRep(input: $input) {
+    __typename
+    ... on CreateWorkspaceRepResult {
+      definitionId
+      configurationVersionId
+    }
+    ... on UserError {
+      message
+    }
+    ... on UnauthorizedError {
+      message
+    }
+    ... on ServiceUnavailable {
+      message
+    }
+  }
+}
+    `;e.s(["useCreateWorkspaceRepMutation",0,function(e){let t={...n,...e};return i.useMutation(r,t)},"useWorkspaceRepCreationAccessQuery",0,function(e){let t={...n,...e};return a.useQuery(s,t)}])},175344,e=>{"use strict";var t=e.i(351623),a=e.i(668227),i=e.i(299020);let n={},s=t.gql`
+    mutation AddWorkspaceRepSlackBot($input: AddWorkspaceRepSlackBotInput!) {
+  addWorkspaceRepSlackBot(input: $input) {
+    __typename
+    ... on AddWorkspaceRepSlackBotResult {
+      actionFailure {
+        message
+      }
+      creation {
+        __typename
+        ... on WorkspaceRepSlackBotDraft {
+          ...SlackBotDraftFields
+        }
+        ... on WorkspaceRepSlackBot {
+          ...SlackBotFields
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${a.SlackBotDraftFieldsFragmentDoc}
+${a.SlackBotFieldsFragmentDoc}`;e.s(["useAddWorkspaceRepSlackBotMutation",0,function(e){let t={...n,...e};return i.useMutation(s,t)}])},636443,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(175344),n=e.i(713443),s=e.i(928952),r=e.i(108501),o=e.i(275240),l=e.i(24382),c=e.i(72495),u=e.i(73559),d=e.i(760845);e.i(214847);var p=e.i(20397),k=e.i(864300),g=e.i(62781),m=e.i(179431),f=e.i(8300),S=e.i(896204),h=e.i(483559);function y({orgId:e,definitionId:B}){let v=(0,k.useIntl)(),w=(0,f.useOrgSlackBots)(e),_=(0,S.useSlackBotActions)(e,w.refetch),[A]=(0,i.useAddWorkspaceRepSlackBotMutation)(),R=(0,a.useMemo)(()=>new g.SlackBotMutationAttempts(e),[e]),[M,b]=(0,a.useState)(""),[F,D]=(0,a.useState)({kind:"idle"}),x=w.data?.getOrg,I=x?.__typename==="Org"&&x.id===e?x:null,j=I?.slack,W=j?.__typename==="OrgSlack",U=W?j.bots.find(e=>"WorkspaceRepSlackBot"===e.__typename&&e.definitionId===B&&"SlackBotDeleted"!==e.status.__typename):void 0,z=W?j.drafts.find(e=>"WorkspaceRepSlackBotDraft"===e.__typename&&e.definitionId===B):void 0,P=null;U?P=(0,m.summarizeBot)(U):z&&(P=(0,m.summarizeDraft)(z));let C=W&&I?.authorizations.createSlackBot.isAuthorized,E="saving"===F.kind,O=v.formatMessage({id:"slackBots.genericError",defaultMessage:"Something went wrong. Try again."}),L=async()=>{D({kind:"saving"});let t=!0,a=await R.run(["addWorkspaceRep",B,M],async a=>{let{data:i}=await A({fetchPolicy:"no-cache",variables:{input:{orgId:e,definitionId:B,handle:M,clientRequestId:a}}});return t=!i?.addWorkspaceRepSlackBot||"ServiceUnavailable"===i.addWorkspaceRepSlackBot.__typename,i?.addWorkspaceRepSlackBot},"AddWorkspaceRepSlackBotResult",O);D(a.ok?{kind:"idle"}:{kind:"error",message:a.message,uncertain:t}),w.refetch().catch(()=>void 0)},$=U?.status.__typename!=="SlackBotAwaitingApproval"||U.status.approval.installUrl?P?.action:{kind:"reinstall",label:{id:"orgs.workspaceRepSlack.restartAuthorization",defaultMessage:"Restart Slack authorization"}};return(0,t.jsxs)(d.View,{className:(0,h.tw)("gap-300"),children:[(0,t.jsx)(c.Text,{children:(0,t.jsx)(p.FormattedMessage,{id:"orgs.workspaceRepSlack.consent",defaultMessage:"Install a Slack app for this rep. Each Slack thread starts a separate conversation. Slack may require an admin to approve the install."})}),w.error||j&&!W?(0,t.jsx)(l.StatusBanner,{colorway:"negative",text:O}):null,"error"===F.kind?(0,t.jsx)(l.StatusBanner,{colorway:"negative",text:F.message}):null,P?(0,t.jsxs)(d.View,{role:"status",className:(0,h.tw)("gap-100"),children:[(0,t.jsx)(c.Text,{children:v.formatMessage(P.headline)}),P.detail?(0,t.jsx)(c.Text,{children:v.formatMessage(P.detail,P.detailValues)}):null,P.note?(0,t.jsx)(c.Text,{children:P.note}):null]}):null,U||z&&$?.kind!=="retry"?null:(0,t.jsxs)(t.Fragment,{children:[(0,t.jsxs)(u.TextField,{value:M,onChange:b,isDisabled:E||"error"===F.kind&&F.uncertain,children:[(0,t.jsx)(o.Label,{children:(0,t.jsx)(p.FormattedMessage,{id:"orgs.workspaceRepSlack.handle",defaultMessage:"Slack bot name"})}),(0,t.jsx)(r.Input,{})]}),(0,t.jsx)(n.Button,{disabled:!C||!M.trim()||E,text:v.formatMessage({id:"orgs.workspaceRepSlack.continue",defaultMessage:"Continue to Slack"}),onClick:()=>void L(),"data-analytics-id":"workspace_rep_continue_slack_button"})]}),$?.kind==="open"?(0,t.jsx)(s.ButtonLink,{noNextLink:!0,href:$.href,target:"_blank",rel:"noopener noreferrer",text:v.formatMessage($.label),"data-analytics-id":"workspace_rep_slack_authorize_link"}):null,U&&$?.kind==="approval"?(0,t.jsx)(n.Button,{text:v.formatMessage($.label),onClick:()=>{_.openInstall(U.id).then(e=>{e.ok||D({kind:"error",message:e.message,uncertain:!1})})},"data-analytics-id":"workspace_rep_slack_approval_button"}):null,U&&$?.kind==="reinstall"?(0,t.jsx)(n.Button,{disabled:!I?.authorizations.manageSlackBots.isAuthorized,text:v.formatMessage($.label),onClick:()=>{_.reinstall(U.id).then(e=>{e.ok||D({kind:"error",message:e.message,uncertain:!1})})},"data-analytics-id":"workspace_rep_slack_reinstall_button"}):null,(0,t.jsx)(n.Button,{text:v.formatMessage({id:"orgs.workspaceRepSlack.refresh",defaultMessage:"Refresh Slack status"}),disabled:w.loading,onClick:()=>void w.refetch().catch(()=>void 0),"data-analytics-id":"workspace_rep_slack_refresh_button"})]})}e.s(["WorkspaceRepSlackInstall",0,function(e){let[i,s]=(0,a.useState)(!1),r=(0,k.useIntl)();return i?(0,t.jsx)(y,{...e}):(0,t.jsx)(n.Button,{text:r.formatMessage({id:"orgs.workspaceRepSlack.add",defaultMessage:"Add to Slack"}),onClick:()=>s(!0),"data-analytics-id":"workspace_rep_add_slack_button"})}])},226885,e=>{"use strict";var t=e.i(276385),a=e.i(389959),i=e.i(530202),n=e.i(72495),s=e.i(760845);e.i(214847);var r=e.i(20397),o=e.i(253457),l=e.i(636443),c=e.i(483559);e.s(["WorkspaceRepCreationSection",0,function({orgId:e,draft:a}){let[u]=(0,i.useCreateWorkspaceRepMutation)();return(0,t.jsxs)(s.View,{className:(0,c.tw)("gap-400"),"data-analytics-id":"workspace_rep_setup_section",children:[(0,t.jsx)(n.Header,{level:2,variant:"subheadDefault",children:(0,t.jsx)(r.FormattedMessage,{id:"orgs.workspaceRepSetup.title",defaultMessage:"Create a workspace rep definition"})}),(0,t.jsx)(n.Text,{color:"dimmer",children:(0,t.jsx)(r.FormattedMessage,{id:"orgs.workspaceRepSetup.intro",defaultMessage:"Pilot members can set up the instructions and model for a shared workspace rep."})}),(0,t.jsx)(o.WorkspaceRepCreationForm,{draft:a,renderSlackInstall:a=>(0,t.jsx)(l.WorkspaceRepSlackInstall,{orgId:e,definitionId:a},`${e}:${a}`),onCreate:async t=>{let{data:a}=await u({variables:{input:{...t,orgId:e}}}),i=a?.createWorkspaceRep;if(!i)throw Error("Missing definition creation response");switch(i.__typename){case"CreateWorkspaceRepResult":return{kind:"created",definitionId:i.definitionId};case"UserError":case"UnauthorizedError":case"ServiceUnavailable":return{kind:"error",message:i.message,ambiguous:"ServiceUnavailable"===i.__typename}}}})]})},"useWorkspaceRepCreationAccess",0,function(e,t=!0){let{data:n,error:s,loading:r,refetch:o}=(0,i.useWorkspaceRepCreationAccessQuery)({variables:{orgId:e??""},skip:!e||!t,notifyOnNetworkStatusChange:!0}),l=n?.getOrg,c=t&&!s&&!!(e&&l?.__typename==="Org"&&l.id===e&&l.authorizations.createWorkspaceRepDefinition.isAuthorized),u=(0,a.useCallback)(()=>{t&&e&&!c&&!r&&o().catch(()=>void 0)},[t,e,c,r,o]);return{canCreate:c,error:s,loading:r,retry:u}}])},62781,e=>{"use strict";var t=e.i(912206);e.s(["SlackBotMutationAttempts",0,class{orgId;attempts;constructor(e){this.orgId=e,this.attempts=new Map}run(e,a,i,n){let s=JSON.stringify([this.orgId,...e]),r=this.attempts.get(s);if(r?.kind==="running")return r.promise;let o=r?.clientRequestId??(0,t.v4)(),l=r?.kind==="uncertain",c=Promise.resolve().then(async()=>{for(;;){let e;try{e=await a(o)}catch(e){return this.attempts.set(s,{kind:"uncertain",clientRequestId:o}),{ok:!1,message:e instanceof Error?e.message:n}}let r=e?.__typename===i;if(r&&e?.actionFailure&&l){l=!1,o=(0,t.v4)(),this.attempts.set(s,{kind:"running",clientRequestId:o,promise:c});continue}if(null==e||"ServiceUnavailable"===e.__typename?this.attempts.set(s,{kind:"uncertain",clientRequestId:o}):this.attempts.delete(s),r){if(e?.actionFailure)return{ok:!1,message:e.actionFailure.message};return{ok:!0}}return{ok:!1,message:e?.message??n}}});return this.attempts.set(s,{kind:"running",clientRequestId:o,promise:c}),c}}])},668227,e=>{"use strict";var t=e.i(351623);let a=t.gql`
+    fragment SlackWorkspaceFields on SlackWorkspace {
+  id
+  name
+  isEnterprise
+}
+    `,i=t.gql`
+    fragment SlackBotFailureFields on SlackBotFailure {
+  code
+  message
+  occurredAt
+}
+    `,n=t.gql`
+    fragment SlackBotDraftFields on SlackBotDraft {
+  __typename
+  id
+  handle
+  iconUrl
+  progress {
+    __typename
+    ... on SlackBotAwaitingAuthorization {
+      authorizeUrl
+      expiresAt
+    }
+    ... on SlackBotAuthorizing {
+      since
+    }
+    ... on SlackBotDraftWorking {
+      startedAt
+      workspace {
+        ...SlackWorkspaceFields
+      }
+    }
+    ... on SlackBotDraftFailed {
+      failure {
+        ...SlackBotFailureFields
+      }
+      pickedWorkspace: workspace {
+        ...SlackWorkspaceFields
+      }
+    }
+  }
+  ... on PrimarySlackBotDraft {
+    slashCommand
+  }
+  ... on WorkspaceRepSlackBotDraft {
+    definitionId
+  }
+}
+    ${a}
+${i}`,s=t.gql`
+    fragment SlackBotApprovalFields on SlackBotApproval {
+  state
+  installUrl
+}
+    `,r=t.gql`
+    fragment SlackBotFields on SlackBot {
+  __typename
+  id
+  appId
+  appUpdateAvailable
+  handle
+  iconUrl
+  createdAt
+  workspace {
+    ...SlackWorkspaceFields
+  }
+  status {
+    __typename
+    ... on SlackBotInstalled {
+      permissionsApproval: approval {
+        ...SlackBotApprovalFields
+      }
+    }
+    ... on SlackBotAwaitingApproval {
+      approval {
+        ...SlackBotApprovalFields
+      }
+    }
+    ... on SlackBotUninstalled {
+      since
+      standingApproval: approval {
+        ...SlackBotApprovalFields
+      }
+    }
+    ... on SlackBotDeleted {
+      deletedAt
+    }
+  }
+  pendingAction {
+    __typename
+    ... on SlackBotAwaitingAuthorization {
+      authorizeUrl
+      expiresAt
+    }
+    ... on SlackBotAuthorizing {
+      since
+    }
+    ... on SlackBotWorking {
+      startedAt
+    }
+  }
+  lastFailure {
+    ...SlackBotFailureFields
+  }
+  ... on PrimarySlackBot {
+    slashCommand
+  }
+  ... on WorkspaceRepSlackBot {
+    definitionId
+  }
+}
+    ${a}
+${s}
+${i}`,o=t.gql`
+    fragment SlackBotSummaryOrgSlackFields on OrgSlack {
+  drafts {
+    ...SlackBotDraftFields
+  }
+  bots {
+    ...SlackBotFields
+  }
+}
+    ${n}
+${r}`;e.s(["SlackBotDraftFieldsFragmentDoc",0,n,"SlackBotFieldsFragmentDoc",0,r,"SlackBotSummaryOrgSlackFieldsFragmentDoc",0,o,"SlackWorkspaceFieldsFragmentDoc",0,a])},179431,e=>{"use strict";var t=e.i(908796),a=e.i(569910);e.i(214847);let i=(0,e.i(800686).defineMessages)({awaitingAuthorization:{id:"slackBots.summaryAwaitingAuthorization",defaultMessage:"Awaiting authorization"},awaitingAuthorizationDetail:{id:"slackBots.summaryAwaitingAuthorizationDetail",defaultMessage:"Finish the consent step in Slack to continue."},openSlack:{id:"slackBots.summaryOpenSlack",defaultMessage:"Open Slack"},authorizing:{id:"slackBots.summaryAuthorizing",defaultMessage:"Connecting…"},authorizingDetail:{id:"slackBots.summaryAuthorizingDetail",defaultMessage:"Slack is handing the authorization back."},creating:{id:"slackBots.summaryCreating",defaultMessage:"Setting up…"},creatingDetail:{id:"slackBots.summaryCreatingDetail",defaultMessage:"Building the app in {workspace}. Slack paces app setup, so this takes a few minutes."},working:{id:"slackBots.summaryWorking",defaultMessage:"Working…"},workingDetail:{id:"slackBots.summaryWorkingDetail",defaultMessage:"Applying the change in Slack."},createFailed:{id:"slackBots.summaryCreateFailed",defaultMessage:"Failed"},tryAgain:{id:"slackBots.summaryTryAgain",defaultMessage:"Try again"},installed:{id:"slackBots.summaryInstalled",defaultMessage:"Installed"},installedPermissionsPending:{id:"slackBots.summaryInstalledPermissionsPending",defaultMessage:"New permissions are waiting for a Slack admin to approve them."},installedPermissionsDenied:{id:"slackBots.summaryInstalledPermissionsDenied",defaultMessage:"A Slack admin denied the new permissions. The bot keeps its current ones."},awaitingApproval:{id:"slackBots.summaryAwaitingApproval",defaultMessage:"Needs admin approval"},awaitingApprovalDetail:{id:"slackBots.summaryAwaitingApprovalDetail",defaultMessage:"Slack will notify you when an admin decides. Then finish the install from here."},approvalDenied:{id:"slackBots.summaryApprovalDenied",defaultMessage:"Approval denied"},approvalDeniedDetail:{id:"slackBots.summaryApprovalDeniedDetail",defaultMessage:"A Slack admin denied the install. You can ask again; convincing them happens outside Replit."},installLink:{id:"slackBots.summaryInstallLink",defaultMessage:"Finish install"},reRequest:{id:"slackBots.summaryReRequest",defaultMessage:"Ask again"},uninstalled:{id:"slackBots.summaryUninstalled",defaultMessage:"Uninstalled"},uninstalledDetail:{id:"slackBots.summaryUninstalledDetail",defaultMessage:"Removed on the Slack side. Nothing on Replit was lost; reinstall to reconnect."},reinstall:{id:"slackBots.summaryReinstall",defaultMessage:"Reinstall"},deleted:{id:"slackBots.summaryDeleted",defaultMessage:"Removed"}});function n(e){return{tone:"progress",headline:i.awaitingAuthorization,detail:i.awaitingAuthorizationDetail,note:null,action:{kind:"open",href:e,label:i.openSlack},inFlight:!0}}function s(e,t,a){return{tone:"progress",headline:e,detail:t,detailValues:a,note:null,action:null,inFlight:!0}}function r(e){return e.installUrl?{kind:"approval",label:e.state===t.SlackBotApprovalState.Pending?i.installLink:i.reRequest}:null}function o(e){let{progress:t}=e;switch(t.__typename){case"SlackBotAwaitingAuthorization":return n(t.authorizeUrl);case"SlackBotAuthorizing":return s(i.authorizing,i.authorizingDetail);case"SlackBotDraftWorking":return s(i.creating,i.creatingDetail,{workspace:t.workspace.name??t.workspace.id});case"SlackBotDraftFailed":return{tone:"negative",headline:i.createFailed,detail:null,note:t.failure.message,action:{kind:"retry",label:i.tryAgain},inFlight:!1};default:return(0,a.default)(t)}}function l(e){if(e.pendingAction){var o=e.pendingAction;switch(o.__typename){case"SlackBotAwaitingAuthorization":return n(o.authorizeUrl);case"SlackBotAuthorizing":return s(i.authorizing,i.authorizingDetail);case"SlackBotWorking":return s(i.working,i.workingDetail);default:return(0,a.default)(o)}}let l=function(e){let n={inFlight:!1,note:null};switch(e.__typename){case"SlackBotInstalled":{let a={...n,tone:"positive",headline:i.installed},s=e.permissionsApproval;if(!s)return{...a,detail:null,action:null};return{...a,detail:s.state===t.SlackBotApprovalState.Pending?i.installedPermissionsPending:i.installedPermissionsDenied,action:r(s)}}case"SlackBotAwaitingApproval":{let a=e.approval.state===t.SlackBotApprovalState.Denied;return{...n,tone:a?"negative":"warning",headline:a?i.approvalDenied:i.awaitingApproval,detail:a?i.approvalDeniedDetail:i.awaitingApprovalDetail,action:r(e.approval)}}case"SlackBotUninstalled":{let a=e.standingApproval;if(a){let e=a.state===t.SlackBotApprovalState.Denied;return{...n,tone:e?"negative":"warning",headline:i.uninstalled,detail:e?i.approvalDeniedDetail:i.awaitingApprovalDetail,action:r(a)}}return{...n,tone:"neutral",headline:i.uninstalled,detail:i.uninstalledDetail,action:{kind:"reinstall",label:i.reinstall}}}case"SlackBotDeleted":return{...n,tone:"neutral",headline:i.deleted,detail:null,action:null};default:return(0,a.default)(e)}}(e.status);return e.lastFailure?{...l,note:e.lastFailure.message}:l}e.s(["getPrimarySlackBotState",0,function(e){let t=e.drafts.find(e=>"PrimarySlackBotDraft"===e.__typename),a=e.bots.find(e=>"PrimarySlackBot"===e.__typename);return a?{kind:"bot",bot:a}:t?{kind:"draft",draft:t}:{kind:"none"}},"hasWorkInFlight",0,function(e){return e.drafts.some(e=>o(e).inFlight)||e.bots.some(e=>l(e).inFlight)},"summarizeBot",0,l,"summarizeDraft",0,o])},803929,e=>{"use strict";var t=e.i(351623),a=e.i(668227),i=e.i(344480);e.i(975473);let n={},s=t.gql`
+    fragment SlackAccountLinkFields on SlackAccountLink {
+  id
+  slackUserId
+  linkedAt
+  workspace {
+    ...SlackWorkspaceFields
+  }
+}
+    ${a.SlackWorkspaceFieldsFragmentDoc}`,r=t.gql`
+    fragment OrgSlackBotsFields on Org {
+  id
+  slug
+  name
+  authorizations {
+    viewSlackBots {
+      isAuthorized
+      message
+    }
+    createSlackBot {
+      isAuthorized
+      message
+    }
+    manageSlackBots {
+      isAuthorized
+      message
+    }
+  }
+  slack {
+    __typename
+    ... on OrgSlack {
+      ...SlackBotSummaryOrgSlackFields
+      viewerAccountLinks {
+        ...SlackAccountLinkFields
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${a.SlackBotSummaryOrgSlackFieldsFragmentDoc}
+${s}`,o=t.gql`
+    query OrgSlackBots($orgId: String!) {
+  getOrg(orgId: $orgId) {
+    __typename
+    ... on Org {
+      ...OrgSlackBotsFields
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${r}`;e.s(["SlackAccountLinkFieldsFragmentDoc",0,s,"useOrgSlackBotsQuery",0,function(e){let t={...n,...e};return i.useQuery(o,t)}])},8300,e=>{"use strict";var t=e.i(389959),a=e.i(803929),i=e.i(63448),n=e.i(179431);let s=new WeakMap;e.s(["useOrgSlackBots",0,function(e){let r=(0,t.useRef)({orgId:e,pending:!1}),o=(0,t.useRef)(),l=(0,t.useRef)({attempts:0,lastForegroundAt:-1/0}).current;(0,t.useEffect)(()=>{l.attempts=0,l.lastForegroundAt=-1/0},[e,l]);let c=(0,a.useOrgSlackBotsQuery)({variables:{orgId:e},fetchPolicy:"cache-first",errorPolicy:"none",notifyOnNetworkStatusChange:!0,ssr:!1}),u=c.data?.getOrg,{client:d,loading:p,refetch:k}=c;(0,t.useEffect)(()=>{if(o.current===e)return;o.current=e;let t=s.get(d)?.get(e);!p&&u?.__typename==="Org"&&(void 0===t||Date.now()-t>=6e4)&&k().catch(()=>{})},[d,e,u,p,k]),(0,t.useEffect)(()=>()=>{let t=r.current;if(t.orgId===e&&void 0!==t.completedAt){let a=s.get(d)??new Map;a.set(e,Math.max(a.get(e)??0,t.completedAt)),s.set(d,a)}},[d,e]),(0,t.useEffect)(()=>{r.current.orgId!==e&&(r.current={orgId:e,pending:!1}),c.loading?r.current.pending=!0:r.current.pending&&!c.error&&u?.__typename==="Org"&&(r.current.completedAt=Date.now(),r.current.pending=!1)},[e,u,c.loading,c.error]);let g=u?.__typename==="Org"?u.slack:null,m=!c.error&&u?.__typename==="Org"&&u.authorizations.viewSlackBots.isAuthorized&&g?.__typename==="UnauthorizedError",f=!!c.error||g?.__typename==="ServiceUnavailable"||m,S=m?2e4:5e3,h=f||g?.__typename==="OrgSlack"&&(0,n.hasWorkInFlight)(g);(0,t.useEffect)(()=>{c.loading||f||(l.attempts=0)},[c.loading,f,l]);let y=(0,i.useThrottledCallback)(()=>{if(!c.loading&&(!f||!(l.attempts>=3)))return f&&(l.attempts+=1),c.refetch()},S,{resetKey:JSON.stringify([e,m])});return(0,t.useEffect)(()=>{if(!h)return;let e=setInterval(y,S);return()=>clearInterval(e)},[e,h,y,S]),(0,t.useEffect)(()=>{let e=()=>{!m&&"visible"===document.visibilityState&&Date.now()-l.lastForegroundAt>=5e3&&(l.lastForegroundAt=Date.now(),l.attempts=0,y())};return window.addEventListener("focus",e),document.addEventListener("visibilitychange",e),()=>{window.removeEventListener("focus",e),document.removeEventListener("visibilitychange",e)}},[y,l,m]),{...c,isRecoveringAuthorization:m&&(l.attempts<3||c.loading)}}])},946771,e=>{"use strict";var t=e.i(351623),a=e.i(668227),i=e.i(803929),n=e.i(299020);let s={},r=t.gql`
+    mutation AddPrimarySlackBot($input: AddPrimarySlackBotInput!) {
+  addPrimarySlackBot(input: $input) {
+    __typename
+    ... on AddPrimarySlackBotResult {
+      actionFailure {
+        message
+      }
+      creation {
+        __typename
+        ... on PrimarySlackBotDraft {
+          ...SlackBotDraftFields
+        }
+        ... on PrimarySlackBot {
+          ...SlackBotFields
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${a.SlackBotDraftFieldsFragmentDoc}
+${a.SlackBotFieldsFragmentDoc}`,o=t.gql`
+    mutation UpdateSlackBot($input: UpdateSlackBotInput!) {
+  updateSlackBot(input: $input) {
+    __typename
+    ... on UpdateSlackBotResult {
+      actionFailure {
+        message
+      }
+      bot {
+        ...SlackBotFields
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${a.SlackBotFieldsFragmentDoc}`,l=t.gql`
+    mutation ReinstallSlackBot($input: ReinstallSlackBotInput!) {
+  reinstallSlackBot(input: $input) {
+    __typename
+    ... on ReinstallSlackBotResult {
+      actionFailure {
+        message
+      }
+      bot {
+        ...SlackBotFields
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${a.SlackBotFieldsFragmentDoc}`,c=t.gql`
+    mutation RemoveSlackBot($input: RemoveSlackBotInput!) {
+  removeSlackBot(input: $input) {
+    __typename
+    ... on RemoveSlackBotResult {
+      actionFailure {
+        message
+      }
+      bot {
+        ...SlackBotFields
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${a.SlackBotFieldsFragmentDoc}`,u=t.gql`
+    mutation UnlinkSlackAccount($input: UnlinkSlackAccountInput!) {
+  unlinkSlackAccount(input: $input) {
+    __typename
+    ... on UnlinkSlackAccountResult {
+      viewerAccountLinks {
+        ...SlackAccountLinkFields
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    ${i.SlackAccountLinkFieldsFragmentDoc}`;e.s(["useAddPrimarySlackBotMutation",0,function(e){let t={...s,...e};return n.useMutation(r,t)},"useReinstallSlackBotMutation",0,function(e){let t={...s,...e};return n.useMutation(l,t)},"useRemoveSlackBotMutation",0,function(e){let t={...s,...e};return n.useMutation(c,t)},"useUnlinkSlackAccountMutation",0,function(e){let t={...s,...e};return n.useMutation(u,t)},"useUpdateSlackBotMutation",0,function(e){let t={...s,...e};return n.useMutation(o,t)}])},996089,e=>{"use strict";var t=e.i(351623);e.i(344480);var a=e.i(975473);let i={},n=t.gql`
+    query SlackBotInstallLink($orgId: String!, $botId: ID!) {
+  getOrg(orgId: $orgId) {
+    __typename
+    ... on Org {
+      id
+      slackBot(id: $botId) {
+        __typename
+        ... on OrgSlackBotResult {
+          bot {
+            id
+            status {
+              __typename
+              ... on SlackBotInstalled {
+                permissionsApproval: approval {
+                  installUrl
+                }
+              }
+              ... on SlackBotAwaitingApproval {
+                approval {
+                  installUrl
+                }
+              }
+              ... on SlackBotUninstalled {
+                standingApproval: approval {
+                  installUrl
+                }
+              }
+            }
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+    ... on Error {
+      message
+    }
+  }
+}
+    `;e.s(["useSlackBotInstallLinkLazyQuery",0,function(e){let t={...i,...e};return a.useLazyQuery(n,t)}])},488363,e=>{"use strict";var t=e.i(996089);e.i(214847);var a=e.i(864300);e.s(["useSlackBotInstallLink",0,function(e,i){let n=(0,a.useIntl)(),[s]=(0,t.useSlackBotInstallLinkLazyQuery)({fetchPolicy:"no-cache",errorPolicy:"none"});return async t=>{let a=window.open("about:blank","_blank");a&&(a.opener=null);try{let r,{data:o,error:l}=await s({variables:{orgId:e,botId:t}});if(l)throw l;let c=o?.getOrg;if(c?.__typename!=="Org")return a?.close(),{ok:!1,message:c?.message??i};let u=c.slackBot;if("OrgSlackBotResult"!==u.__typename)return a?.close(),{ok:!1,message:u.message};let{status:d}=u.bot;switch(d.__typename){case"SlackBotInstalled":r=d.permissionsApproval?.installUrl;break;case"SlackBotAwaitingApproval":r=d.approval.installUrl;break;case"SlackBotUninstalled":r=d.standingApproval?.installUrl;break;case"SlackBotDeleted":r=null;break;default:throw Error(String(d))}if(!r)return a?.close(),{ok:!1,message:n.formatMessage({id:"slackBots.installLinkUnavailable",defaultMessage:"Slack did not provide an install link. Try reinstalling the bot."})};return a?a.location.replace(r):window.location.assign(r),{ok:!0}}catch(e){return a?.close(),{ok:!1,message:e instanceof Error?e.message:i}}}}])},896204,e=>{"use strict";var t=e.i(389959),a=e.i(946771);e.i(214847);var i=e.i(864300),n=e.i(62781),s=e.i(488363);let r={fetchPolicy:"no-cache",refetchQueries:["OrgSlackBots"],awaitRefetchQueries:!1};e.s(["useSlackBotActions",0,function(e,o){let l=(0,i.useIntl)(),c=(0,t.useMemo)(()=>new n.SlackBotMutationAttempts(e),[e]),u=o?{fetchPolicy:"no-cache",onCompleted:()=>{Promise.resolve().then(o).catch(()=>{})}}:r,[d]=(0,a.useAddPrimarySlackBotMutation)(),[p]=(0,a.useUpdateSlackBotMutation)(),[k]=(0,a.useReinstallSlackBotMutation)(),[g]=(0,a.useRemoveSlackBotMutation)(),[m]=(0,a.useUnlinkSlackAccountMutation)(),f=l.formatMessage({id:"slackBots.genericError",defaultMessage:"Something went wrong. Try again."});return{addPrimary:t=>c.run(["addPrimary",t],async a=>{let{data:i}=await d({...u,variables:{input:{orgId:e,handle:t,clientRequestId:a}}});return i?.addPrimarySlackBot},"AddPrimarySlackBotResult",f),rename:(t,a)=>c.run(["rename",t,a],async i=>{let{data:n}=await p({...u,variables:{input:{orgId:e,botId:t,handle:a,clientRequestId:i}}});return n?.updateSlackBot},"UpdateSlackBotResult",f),updateApp:t=>c.run(["updateApp",t],async a=>{let{data:i}=await p({...u,variables:{input:{orgId:e,botId:t,clientRequestId:a}}});return i?.updateSlackBot},"UpdateSlackBotResult",f),reinstall:t=>c.run(["reinstall",t],async a=>{let{data:i}=await k({...u,variables:{input:{orgId:e,botId:t,clientRequestId:a}}});return i?.reinstallSlackBot},"ReinstallSlackBotResult",f),remove:t=>c.run(["remove",t],async a=>{let{data:i}=await g({...u,variables:{input:{orgId:e,botId:t,clientRequestId:a}}});return i?.removeSlackBot},"RemoveSlackBotResult",f),unlink:t=>c.run(["unlink",t],async()=>{let{data:a}=await m({...u,variables:{input:{orgId:e,linkId:t}}});return a?.unlinkSlackAccount},"UnlinkSlackAccountResult",f),openInstall:(0,s.useSlackBotInstallLink)(e,f)}}])}]);
+
+//# debugId=fce756a1-fbfe-0d30-ea9a-9e1ede09245a
+//# sourceMappingURL=29tk6i_hw__dp.js.map
